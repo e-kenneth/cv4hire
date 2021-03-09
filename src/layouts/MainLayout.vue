@@ -12,25 +12,25 @@
         />
 
         <q-toolbar-title>
-          Quasar App
+          CV4Hire
         </q-toolbar-title>
 
-        <div>Quasar v{{ $q.version }}</div>
+        <!-- <div>Quasar v{{ $q.version }}</div> -->
+        <div><q-btn color="secondary" icon="person" /></div>
       </q-toolbar>
     </q-header>
 
     <q-drawer
       v-model="leftDrawerOpen"
       show-if-above
-      bordered
-      class="bg-grey-1"
+      elevated
     >
       <q-list>
         <q-item-label
           header
-          class="text-grey-8"
+          class="text-primary"
         >
-          Essential Links
+          CV4Hire
         </q-item-label>
 
         <EssentialLink
