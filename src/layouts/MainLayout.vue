@@ -11,27 +11,24 @@
           @click="toggleLeftDrawer"
         />
 
-        <q-toolbar-title>
-          CV4Hire
-        </q-toolbar-title>
+        <q-toolbar-title> CV4Hire </q-toolbar-title>
 
         <!-- <div>Quasar v{{ $q.version }}</div> -->
+        <div>
+          <q-btn
+            color="secondary"
+            icon="brightness_high"
+            class="q-mr-md"
+            @click="darkMode.toggle"
+          />
+        </div>
         <div><q-btn color="secondary" icon="person" /></div>
       </q-toolbar>
     </q-header>
 
-    <q-drawer
-      v-model="leftDrawerOpen"
-      show-if-above
-      elevated
-    >
+    <q-drawer v-model="leftDrawerOpen" show-if-above elevated>
       <q-list>
-        <q-item-label
-          header
-          class="text-primary"
-        >
-          CV4Hire
-        </q-item-label>
+        <q-item-label header class="text-primary"> CV4Hire </q-item-label>
 
         <EssentialLink
           v-for="link in essentialLinks"
@@ -48,45 +45,54 @@
 </template>
 
 <script lang="ts">
-import EssentialLink from 'components/EssentialLink.vue'
+import EssentialLink from "components/EssentialLink.vue";
 
 const linksList = [
   {
-    title: 'Home',
-    icon: 'school',
-    link: '/'
+    title: "Home",
+    icon: "school",
+    link: "/",
   },
   {
-    title: 'Browse',
-    icon: 'school',
-    link: '/browse/'
+    title: "Browse",
+    icon: "school",
+    link: "/browse/",
   },
   {
-    title: 'Profile',
-    icon: 'school',
-    link: '/profile/'
+    title: "Profile",
+    icon: "school",
+    link: "/profile/",
   },
 ];
 
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref } from "vue";
+import { useQuasar } from "quasar";
 
 export default defineComponent({
-  name: 'MainLayout',
+  name: "MainLayout",
 
   components: {
-    EssentialLink
+    EssentialLink,
   },
 
-  setup () {
-    const leftDrawerOpen = ref(false)
+  setup() {
+    const leftDrawerOpen = ref(false);
+    const $q = useQuasar();
+
+    const darkMode = {
+      toggle: () => {
+        $q.dark.toggle();
+      },
+    };
 
     return {
       essentialLinks: linksList,
       leftDrawerOpen,
-      toggleLeftDrawer () {
-        leftDrawerOpen.value = !leftDrawerOpen.value
-      }
-    }
-  }
-})
+      toggleLeftDrawer() {
+        leftDrawerOpen.value = !leftDrawerOpen.value;
+      },
+      darkMode,
+    };
+  },
+});
 </script>
