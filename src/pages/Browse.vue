@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <div class="row">
-        <div class="col-3" v-for="talent in talents" :key="talent.id">
+    <div class="row q-pa-md items-stretch">
+        <div class="talents col-4 col-lg-2" v-for="talent in talents" :key="talent.id">
           <talent-card :talent="talent" />
         </div>
     </div>
@@ -45,4 +45,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.talents{
+  // align-items: stretch;
+}
 </style>
