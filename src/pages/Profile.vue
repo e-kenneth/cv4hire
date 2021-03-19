@@ -1,6 +1,7 @@
 <template>
     <div>
         Profile
+        {{$route.params}}
     </div>
 </template>
 
