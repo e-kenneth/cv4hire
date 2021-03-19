@@ -1,8 +1,8 @@
 <template>
   <div class="container">
     <div class="row q-pa-md items-stretch">
-        <div class="talents col-4 col-lg-2" v-for="talent in talents" :key="talent.id">
-          <talent-card :talent="talent" />
+        <div class="talents col-6 col-lg-2" v-for="talent in talents" :key="talent.id">
+          <talent-card :talent="talent" /> 
         </div>
     </div>
   </div>

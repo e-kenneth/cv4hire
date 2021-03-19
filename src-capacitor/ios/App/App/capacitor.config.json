@@ -1,0 +1,10 @@
+{
+  "appId": "com.cv4hire",
+  "appName": "CV4Hire",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www",
+  "server": {
+    "url": "http://192.168.2.34:8080"
+  }
+}
