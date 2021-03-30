@@ -5,18 +5,48 @@
       <q-input
         v-model="user.name"
         type="text"
-        label="Nama lengkap"
+        label="Nama Perusahaan"
         required="required"
       />
-      <div class="row">
-        <div class="text-primary self-center q-pr-lg">Tanggal lahir:</div>
-        <q-input type="date" v-model="user.birthdate" required="required" />
-      </div>
-      <!-- <q-date v-model="user.birthday" /> -->
+      <q-input
+        v-model="user.name"
+        type="text"
+        label="Alamat perusahaan"
+        required="required"
+      />
+      <q-input
+        v-model="user.name"
+        type="int"
+        label="NPWP"
+        required="required"
+      />
+
+      <q-select
+        v-model="user.domisili_id"
+        :options="options.kota"
+        emit-value
+        map-options
+        label="Domisili"
+      />
+      
+      <q-input
+        v-model="user.password"
+        type="int"
+        label="Nomer telpon kantor"
+        required="required"
+      />
+      
+      
+      <q-input
+        v-model="user.email"
+        type="int"
+        label="Nomer HP/ WA"
+        required="required"
+      />
       <q-input
         v-model="user.email"
         type="email"
-        label="Alamat email"
+        label="Alamat email perusahaan"
         required="required"
       />
       <q-input
@@ -27,75 +57,18 @@
       />
       <q-input
         v-model="user.password"
-        type="password"
-        label="Ulang sandi"
-        required="required"
+        type="text"
+        label="website perusahaan (jika mempunyai)"
+        
       />
-      <q-select
-        v-model="user.domisili_id"
-        :options="options.kota"
-        emit-value
-        map-options
-        label="Domisili"
-      />
-      <q-select
-        v-model="temporary.kota_id"
-        :options="options.kota"
-        emit-value
-        map-options
-        label="Kota universitas"
-      />
-      <q-select
-        v-model="temporary.universitas_id"
-        :options="options.universitas"
-        emit-value
-        map-options
-        label="Universitas"
-      />
-      <q-select
-        v-model="temporary.fakultas_id"
-        :options="options.fakultas"
-        emit-value
-        map-options
-        label="Fakultas"
-      />
-      <q-select
-        v-model="user.jurusan_id"
-        :options="options.jurusan"
-        emit-value
-        map-options
-        label="Jurusan"
-      />
-      <q-input
-        v-model="user.tahun_lulus"
-        type="number"
-        min="1950"
-        max="2022"
-        label="Tahun lulus (1950-2022)"
-        required="required"
-      />
-      <q-input
-        v-model="user.ipk"
-        type="number"
-        min="0"
-        max="4.00"
-        step="0.01"
-        label="Index Prestasi Kumulatif (0.00-4.00)"
-        required="required"
-      />
-      <q-select
-        v-model="user.gender_id"
-        :options="options.gender"
-        emit-value
-        map-options
-        label="Gender"
-      />
+      
+      
       <q-select
         v-model="user.religion_id"
         :options="options.religion"
         emit-value
         map-options
-        label="Religion"
+        label="Bidang bisnis"
       />
       <div>
         <q-btn label="Daftar sekarang" type="submit" color="primary" />
@@ -161,6 +134,28 @@ export default {
   },
   mounted () {
     // load axios daftar kota > options.kota
+  },
+
+  mounted() {
+    api
+      .get("kota/")
+      .then((response) => {
+        response.data.forEach((currentData) => {
+          const newKota = {
+            label: currentData.name,
+            value: currentData.id,
+          };
+          this.options.kota.push(newKota);
+        });
+      })
+      .catch(() => {
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: "Loading failed",
+          icon: "report_problem",
+        });
+      });
   },
 };
 </script>
