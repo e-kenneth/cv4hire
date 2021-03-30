@@ -43,8 +43,9 @@
         :options="options.kota"
         emit-value
         map-options
+        @change="loadUniversitas"
         label="Kota universitas"
-      />
+      /> {{temporary.kota_id}}
       <q-select
         v-model="temporary.universitas_id"
         :options="options.universitas"
@@ -111,6 +112,7 @@
 </template>
 
 <script>
+import { api } from "boot/axios";
 export default {
   data() {
     return {
@@ -158,9 +160,50 @@ export default {
       console.log(this.user);
       // axios dsb
     },
+    loadUniversitas() {
+      alert('a')
+      // api
+      //   .get("universitas/universitasbykotaid.php?id=" + this.temporary.kota_id)
+      //   .then((response) => {
+      //     response.data.forEach((currentData) => {
+      //       const newUniversitas = {
+      //         label: currentData.name,
+      //         value: currentData.id,
+      //       };
+      //       print(newUniversitas);
+      //       this.options.universitas.push(newUniversitas);
+      //     });
+      //   })
+      //   .catch(() => {
+      //     $q.notify({
+      //       color: "negative",
+      //       position: "top",
+      //       message: "Loading failed",
+      //       icon: "report_problem",
+      //     });
+      //   });
+    },
   },
-  mounted () {
-    // load axios daftar kota > options.kota
+  mounted() {
+    api
+      .get("kota/")
+      .then((response) => {
+        response.data.forEach((currentData) => {
+          const newKota = {
+            label: currentData.name,
+            value: currentData.id,
+          };
+          this.options.kota.push(newKota);
+        });
+      })
+      .catch(() => {
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: "Loading failed",
+          icon: "report_problem",
+        });
+      });
   },
 };
 </script>
