@@ -11,7 +11,19 @@
           @click="toggleLeftDrawer"
         />
 
-        <q-toolbar-title> CV4Hire </q-toolbar-title>
+        <!-- <q-toolbar-title> CV4Hire </q-toolbar-title> -->
+        <div>
+          <img class="logo-top" src="~assets/logo.png" />
+        </div>
+
+        <EssentialLink
+          position="top"
+          v-for="link in essentialLinks"
+          :key="link.title"
+          v-bind="link"
+        />
+
+        <q-space />
 
         <!-- <div>Quasar v{{ $q.version }}</div> -->
         <div>
@@ -26,9 +38,16 @@
       </q-toolbar>
     </q-header>
 
-    <q-drawer v-model="leftDrawerOpen" show-if-above elevated>
+    <q-drawer
+      class="bg-primary text-white"
+      v-model="leftDrawerOpen"
+      show-if-above
+      elevated
+    >
       <q-list>
-        <q-item-label header class="text-primary"> CV4Hire </q-item-label>
+        <div>
+          <img class="logo-side" src="~assets/logo.png" /> 
+        </div>
 
         <EssentialLink
           v-for="link in essentialLinks"
@@ -96,3 +115,20 @@ export default defineComponent({
   },
 });
 </script>
+<style lang="scss" scoped>
+%logo {
+  height: 40px;
+  border-radius: 5px;
+  background-color: white;
+}
+
+.logo-top {
+  @extend %logo;
+  margin: 5px 20px 0 10px;
+}
+
+.logo-side {
+  @extend %logo;
+  margin: 20px 0 20px 20px;
+}
+</style>

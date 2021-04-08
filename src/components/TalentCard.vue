@@ -35,7 +35,7 @@ export default {
 
 <style lang="scss" scoped>
 .container {
-  background-color: $dark;
+  background-color: $primary;
   color: white;
   border-radius: 5px;
   overflow: hidden;
@@ -60,6 +60,7 @@ a{
 }
 .domisili {
   @include text;
+  color: $secondary;
   padding-bottom: 20px;
   font-size: 20px;
 }

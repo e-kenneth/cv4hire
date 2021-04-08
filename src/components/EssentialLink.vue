@@ -6,7 +6,7 @@
     :to="link"
   >
     <q-item-section
-      v-if="icon"
+      v-if="icon && position != 'top'"
       avatar
     >
       <q-icon :name="icon" />
@@ -45,7 +45,18 @@ export default defineComponent({
     icon: {
       type: String,
       default: ''
-    }
+    },
+
+    position: {
+      type: String,
+      default: 'left'
+    },
   }
 })
 </script>
+<style lang="scss" scoped>
+.q-router-link--active, .q-item--active{
+  background-color: $secondary;
+  color:white;
+}
+</style>
