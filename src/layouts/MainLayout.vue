@@ -82,6 +82,16 @@ const linksList = [
     icon: "school",
     link: "/profile/",
   },
+  {
+    title: "registertalent (temp)",
+    icon: "school",
+    link: "/Talent/Register.vue/",
+  },
+  {
+    title: "registerrecruiter (temp)",
+    icon: "school",
+    link: "/Recruiter/Register.vue/",
+  },
 ];
 
 import { defineComponent, ref } from "vue";
