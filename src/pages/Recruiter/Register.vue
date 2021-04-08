@@ -28,15 +28,14 @@
         map-options
         label="Domisili"
       />
-      
+
       <q-input
         v-model="user.password"
         type="int"
         label="Nomer telpon kantor"
         required="required"
       />
-      
-      
+
       <q-input
         v-model="user.email"
         type="int"
@@ -59,10 +58,8 @@
         v-model="user.password"
         type="text"
         label="website perusahaan (jika mempunyai)"
-        
       />
-      
-      
+
       <q-select
         v-model="user.religion_id"
         :options="options.religion"
@@ -84,6 +81,7 @@
 </template>
 
 <script>
+import { api } from "boot/axios";
 export default {
   data() {
     return {
@@ -132,7 +130,7 @@ export default {
       // axios dsb
     },
   },
-  mounted () {
+  mounted() {
     // load axios daftar kota > options.kota
   },
 
