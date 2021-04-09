@@ -34,7 +34,7 @@
             @click="darkMode.toggle"
           />
         </div>
-        <div><q-btn color="secondary" icon="person" /></div>
+        <div><UserButton /></div>
       </q-toolbar>
     </q-header>
 
@@ -65,6 +65,7 @@
 
 <script lang="ts">
 import EssentialLink from "components/EssentialLink.vue";
+import UserButton from "components/UserButton.vue";
 
 const linksList = [
   {
@@ -82,16 +83,6 @@ const linksList = [
     icon: "school",
     link: "/profile/",
   },
-  {
-    title: "Register Professional",
-    icon: "school",
-    link: "/Professional/Register/",
-  },
-  {
-    title: "Register Recruiter",
-    icon: "school",
-    link: "/Recruiter/Register/",
-  },
 ];
 
 import { defineComponent, ref } from "vue";
@@ -102,6 +93,7 @@ export default defineComponent({
 
   components: {
     EssentialLink,
+    UserButton,
   },
 
   setup() {
