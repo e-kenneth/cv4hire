@@ -1,8 +1,8 @@
 <template>
   <div class="container">
     <div class="row q-pa-md items-stretch">
-        <div class="talents col-6 col-lg-2" v-for="talent in talents" :key="talent.id">
-          <talent-card :talent="talent" /> 
+        <div class="professionals col-6 col-lg-2" v-for="professional in professionals" :key="professional.id">
+          <professional-card :professional="professional" /> 
         </div>
     </div>
   </div>
@@ -11,14 +11,14 @@
 <script>
 import { api } from "boot/axios";
 import global from "src/components/global";
-import TalentCard from "src/components/TalentCard.vue";
+import ProfessionalCard from "src/components/ProfessionalCard.vue";
 export default {
   components: {
-    TalentCard,
+    ProfessionalCard,
   },
   data() {
     return {
-      talents: [],
+      professionals: [],
     };
   },
   computed: {
@@ -28,9 +28,9 @@ export default {
   },
   mounted() {
     api
-      .get("talent/")
+      .get("professional/")
       .then((response) => {
-        this.talents = response.data;
+        this.professionals = response.data;
       })
       .catch(() => {
         $q.notify({
@@ -45,7 +45,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.talents{
+.professionals{
   // align-items: stretch;
 }
 </style>

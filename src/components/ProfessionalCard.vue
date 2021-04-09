@@ -1,6 +1,6 @@
 <template>
   <div class="container q-ma-sm">
-    <router-link tag="div" class="column" :to="'/profile/' + talent.id">
+    <router-link tag="div" class="column" :to="'/profile/' + professional.id">
       <div>
         <q-img
           class="photo"
@@ -20,14 +20,14 @@
 import { changeToSentenceCase } from "src/components/Utilites";
 export default {
   props: {
-    talent: Object,
+    professional: Object,
   },
   computed: {
     jurusan() {
-      return changeToSentenceCase(this.talent.jurusan);
+      return changeToSentenceCase(this.professional.jurusan);
     },
     domisili() {
-      return changeToSentenceCase(this.talent.domisili);
+      return changeToSentenceCase(this.professional.domisili);
     },
   },
 };
