@@ -1,27 +1,27 @@
 <template>
   <div>
     <q-form @submit="onSubmit" class="q-pa-md q-gutter-md columns">
-      <h5 class="q-mb-none">Daftar akun baru</h5>
-      <q-input
+      <h5 class="form-header">Daftar akun baru</h5>
+      <q-input color="secondary"
         v-model="user.name"
         type="text"
         label="Nama Perusahaan"
         required="required"
       />
-      <q-input
+      <q-input color="secondary"
         v-model="user.name"
         type="text"
         label="Alamat perusahaan"
         required="required"
       />
-      <q-input
+      <q-input color="secondary"
         v-model="user.name"
         type="int"
         label="NPWP"
         required="required"
       />
 
-      <q-select
+      <q-select color="secondary"
         v-model="user.domisili_id"
         :options="options.kota"
         emit-value
@@ -29,38 +29,38 @@
         label="Domisili"
       />
 
-      <q-input
+      <q-input color="secondary"
         v-model="user.password"
         type="int"
         label="Nomer telpon kantor"
         required="required"
       />
 
-      <q-input
+      <q-input color="secondary"
         v-model="user.email"
         type="int"
         label="Nomer HP/ WA"
         required="required"
       />
-      <q-input
+      <q-input color="secondary"
         v-model="user.email"
         type="email"
         label="Alamat email perusahaan"
         required="required"
       />
-      <q-input
+      <q-input color="secondary"
         v-model="user.password"
         type="password"
         label="Kata sandi"
         required="required"
       />
-      <q-input
+      <q-input color="secondary"
         v-model="user.password"
         type="text"
         label="website perusahaan (jika mempunyai)"
       />
 
-      <q-select
+      <q-select color="secondary"
         v-model="user.religion_id"
         :options="options.religion"
         emit-value
@@ -68,10 +68,10 @@
         label="Bidang bisnis"
       />
       <div>
-        <q-btn label="Daftar sekarang" type="submit" color="primary" />
+        <q-btn label="Daftar sekarang" type="submit" color="secondary" />
         <q-btn
           label="Saya sudah punya akun"
-          color="primary"
+          color="secondary"
           flat
           class="q-ml-sm"
         />

@@ -55,8 +55,13 @@ export default defineComponent({
 })
 </script>
 <style lang="scss" scoped>
+.q-item{
+  margin: 5px;
+  border-radius: 5px;
+}
 .q-router-link--active, .q-item--active{
   background-color: $secondary;
   color:white;
 }
+
 </style>

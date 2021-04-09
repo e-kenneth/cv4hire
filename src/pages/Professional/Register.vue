@@ -1,73 +1,73 @@
 <template>
   <div>
     <q-form @submit="onSubmit" class="q-pa-md q-gutter-md columns">
-      <h5 class="q-mb-none">Daftar akun baru</h5>
-      <q-input
+      <h5 class="form-header">Daftar akun baru</h5>
+      <q-input color="secondary"
         v-model="user.name"
         type="text"
         label="Nama lengkap"
         required="required"
       />
       <div class="row">
-        <div class="text-primary self-center q-pr-lg">Tanggal lahir:</div>
-        <q-input type="date" v-model="user.birthdate" required="required" />
+        <div class=" self-center q-pr-lg">Tanggal lahir:</div>
+        <q-input color="secondary" type="date" v-model="user.birthdate" required="required" />
       </div>
       <!-- <q-date v-model="user.birthday" /> -->
-      <q-input
+      <q-input color="secondary"
         v-model="user.email"
         type="email"
         label="Alamat email"
         required="required"
       />
-      <q-input
+      <q-input color="secondary"
         v-model="user.password"
         type="password"
         label="Kata sandi"
         required="required"
       />
-      <q-input
+      <q-input color="secondary"
         v-model="user.password"
         type="password"
         label="Ulang sandi"
         required="required"
       />
-      <q-select
+      <q-select color="secondary"
         v-model="user.domisili_id"
         :options="options.kota"
         emit-value
         map-options
         label="Domisili"
       />
-      <q-select
+      <q-select color="secondary"
         v-model="temporary.kota_id"
         :options="options.kota"
         emit-value
         map-options
-        @change="loadUniversitas"
+        @input-value="loadUniversitas"
         label="Kota universitas"
-      /> {{temporary.kota_id}}
-      <q-select
+      />
+      <q-select color="secondary"
         v-model="temporary.universitas_id"
         :options="options.universitas"
         emit-value
         map-options
         label="Universitas"
       />
-      <q-select
+      <q-select color="secondary"
         v-model="temporary.fakultas_id"
         :options="options.fakultas"
         emit-value
         map-options
         label="Fakultas"
       />
-      <q-select
+      <q-select color="secondary"
         v-model="user.jurusan_id"
         :options="options.jurusan"
         emit-value
         map-options
         label="Jurusan"
       />
-      <q-input
+      <q-input color="secondary"
         v-model="user.tahun_lulus"
         type="number"
         min="1950"
@@ -75,7 +75,7 @@
         label="Tahun lulus (1950-2022)"
         required="required"
       />
-      <q-input
+      <q-input color="secondary"
         v-model="user.ipk"
         type="number"
         min="0"
@@ -84,14 +84,14 @@
         label="Index Prestasi Kumulatif (0.00-4.00)"
         required="required"
       />
-      <q-select
+      <q-select color="secondary"
         v-model="user.gender_id"
         :options="options.gender"
         emit-value
         map-options
         label="Gender"
       />
-      <q-select
+      <q-select color="secondary"
         v-model="user.religion_id"
         :options="options.religion"
         emit-value
@@ -99,10 +99,10 @@
         label="Religion"
       />
       <div>
-        <q-btn label="Daftar sekarang" type="submit" color="primary" />
+        <q-btn label="Daftar sekarang" type="submit" color="secondary" />
         <q-btn
           label="Saya sudah punya akun"
-          color="primary"
+          color="secondary"
           flat
           class="q-ml-sm"
         />
@@ -160,28 +160,38 @@ export default {
       console.log(this.user);
       // axios dsb
     },
-    loadUniversitas() {
-      alert('a')
-      // api
-      //   .get("universitas/universitasbykotaid.php?id=" + this.temporary.kota_id)
-      //   .then((response) => {
-      //     response.data.forEach((currentData) => {
-      //       const newUniversitas = {
-      //         label: currentData.name,
-      //         value: currentData.id,
-      //       };
-      //       print(newUniversitas);
-      //       this.options.universitas.push(newUniversitas);
-      //     });
-      //   })
-      //   .catch(() => {
-      //     $q.notify({
-      //       color: "negative",
-      //       position: "top",
-      //       message: "Loading failed",
-      //       icon: "report_problem",
-      //     });
-      //   });
+    loadUniversitas() {},
+  },
+  computed: {
+    selectedKota() {
+      return this.temporary.kota_id;
+    },
+  },
+  watch: {
+    selectedKota: function (newValue, oldValue) {
+      this.options.universitas = [];
+      this.temporary.universitas_id = "";
+      this.temporary.fakultas_id = "";
+      this.temporary.jurusan_id = "";
+      api
+        .get("universitas/universitasbykotaid.php?id=" + newValue)
+        .then((response) => {
+          response.data.forEach((currentData) => {
+            const newUniversitas = {
+              label: currentData.name,
+              value: currentData.id,
+            };
+            this.options.universitas.push(newUniversitas);
+          });
+        })
+        .catch(() => {
+          $q.notify({
+            color: "negative",
+            position: "top",
+            message: "Loading failed",
+            icon: "report_problem",
+          });
+        });
     },
   },
   mounted() {

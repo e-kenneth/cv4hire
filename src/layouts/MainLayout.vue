@@ -85,12 +85,12 @@ const linksList = [
   {
     title: "Register Professional",
     icon: "school",
-    link: "/Professional/Register.vue/",
+    link: "/Professional/Register/",
   },
   {
     title: "Register Recruiter",
     icon: "school",
-    link: "/Recruiter/Register.vue/",
+    link: "/Recruiter/Register/",
   },
 ];
 
