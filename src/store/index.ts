@@ -1,6 +1,9 @@
 import { store } from 'quasar/wrappers';
 import { createStore } from 'vuex';
 
+import main from './main'
+import { MainStateInterface } from './main/state';
+
 // import example from './module-example'
 // import { ExampleStateInterface } from './module-example/state';
 
@@ -17,12 +20,13 @@ export interface StateInterface {
   // Define your own store structure, using submodules if needed
   // example: ExampleStateInterface;
   // Declared as unknown to avoid linting issue. Best to strongly type as per the line above.
-  example: unknown;
+  main: MainStateInterface;
 }
 
 export default store(function (/* { ssrContext } */) {
   const Store = createStore<StateInterface>({
     modules: {
+      main,
       // example
     },
 
