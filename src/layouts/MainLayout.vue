@@ -3,6 +3,7 @@
     <q-header elevated>
       <q-toolbar>
         <q-btn
+          v-if="orientation == 'portrait'"
           flat
           dense
           round
@@ -13,15 +14,20 @@
 
         <!-- <q-toolbar-title> CV4Hire </q-toolbar-title> -->
         <div>
-          <img class="logo-top" src="~assets/logo.png" />
+          <router-link to="/"
+            ><img class="logo-top" src="~assets/logo.png" alt="cv4hire_logo"
+          /></router-link>
         </div>
 
+        <!-- <span v-if="orientation == 'landscape'"> -->
         <EssentialLink
+          v-if="orientation == 'landscape'"
           position="top"
           v-for="link in essentialLinks"
           :key="link.title"
           v-bind="link"
         />
+        <!-- </span> -->
 
         <q-space />
 
@@ -38,15 +44,12 @@
       </q-toolbar>
     </q-header>
 
-    <q-drawer
-      class="bg-primary text-white"
-      v-model="leftDrawerOpen"
-      show-if-above
-      elevated
-    >
+    <q-drawer class="bg-primary text-white" v-model="leftDrawerOpen" elevated>
       <q-list>
         <div>
-          <img class="logo-side" src="~assets/logo.png" /> 
+          <router-link to="/"
+            ><img class="logo-top" src="~assets/logo.png" alt="cv4hire_logo"
+          /></router-link>
         </div>
 
         <EssentialLink
@@ -85,7 +88,7 @@ const linksList = [
   },
 ];
 
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, computed } from "vue";
 import { useQuasar } from "quasar";
 
 export default defineComponent({
@@ -100,6 +103,16 @@ export default defineComponent({
     const leftDrawerOpen = ref(false);
     const $q = useQuasar();
 
+    // $q.screen.setSizes({ sm: 0, md: 800, lg: 1000, xl: 1279 });
+
+    const orientation = computed(() => {
+      if ($q.screen.width >= $q.screen.height) {
+        return "landscape";
+      } else {
+        return "portrait";
+      }
+    });
+
     const darkMode = {
       toggle: () => {
         $q.dark.toggle();
@@ -113,6 +126,7 @@ export default defineComponent({
         leftDrawerOpen.value = !leftDrawerOpen.value;
       },
       darkMode,
+      orientation,
     };
   },
 });
