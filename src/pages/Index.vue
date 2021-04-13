@@ -1,5 +1,5 @@
 <template>
-  <q-page class="row items-center justify-evenly">
+  <q-page class="row">
     <example-component
       title="Example componenta"
       active
@@ -15,7 +15,7 @@ import ExampleComponent from 'components/CompositionComponent.vue';
 import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
-  name: 'PageIndex',
+  name: 'Home',
   components: { ExampleComponent },
   setup() {
     const todos = ref<Todo[]>([
