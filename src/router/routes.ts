@@ -11,7 +11,6 @@ const routes: RouteRecordRaw[] = [
       { path: 'profile/:id', component: () => import('pages/Profile.vue') },
       { path: 'professional/register', component: () => import('pages/Professional/Register.vue') },
       { path: 'recruiter/register', component: () => import('pages/Recruiter/Register.vue') },
-      { path: 'indexcopy', component: () => import('pages/indexcopy.vue') },
     ],
   },
 
