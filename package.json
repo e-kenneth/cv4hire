@@ -23,6 +23,7 @@
     "@quasar/extras": "^1.10.2",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
+    "firebase": "^8.4.3",
     "quasar": "^2.0.0-beta.12"
   },
   "devDependencies": {
