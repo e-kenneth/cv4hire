@@ -1,13 +1,18 @@
 <template>
   <div>
-    <q-btn color="secondary" icon="person" :label="label" @click="opened = true" />
+    <q-btn
+      color="secondary"
+      icon="person"
+      :label="label"
+      @click="opened = true"
+    />
     <q-dialog v-model="opened">
       <q-card v-if="loginState == 0">
         <q-card-section class="column">
           <q-btn
             class="q-mb-md"
             color="secondary"
-            label="Masuk"
+            label="Google Sign-in"
             @click="dummyLogin"
           />
           <q-btn
@@ -42,11 +47,7 @@
             to="Profile"
             @click="opened = false"
           />
-          <q-btn
-            color="secondary"
-            label="Keluar"
-            @click="dummyLogout"
-          />
+          <q-btn color="secondary" label="Keluar" @click="dummyLogout" />
         </q-card-section>
       </q-card>
     </q-dialog>
@@ -54,6 +55,7 @@
 </template>
 
 <script>
+
 export default {
   data() {
     return {
