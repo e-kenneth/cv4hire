@@ -46,7 +46,7 @@
         @input-value="loadUniversitas"
         label="Kota universitas"
       />
-      <q-select color="secondary"
+      <!-- <q-select color="secondary"
         v-model="temporary.universitas_id"
         :options="options.universitas"
         emit-value
@@ -83,7 +83,7 @@
         step="0.01"
         label="Index Prestasi Kumulatif (0.00-4.00)"
         required="required"
-      />
+      /> -->
       <q-select color="secondary"
         v-model="user.gender_id"
         :options="options.gender"
@@ -97,6 +97,13 @@
         emit-value
         map-options
         label="Religion"
+      />
+      <q-select color="secondary"
+        v-model="user.desiredjob"
+        :options="options.desiredjob"
+        emit-value
+        map-options
+        label="pekerjaan yang diinginkan"
       />
       <div>
         <q-btn label="Daftar sekarang" type="submit" color="secondary" />
@@ -137,13 +144,14 @@ export default {
       },
       options: {
         kota: [],
-        universitas: [],
-        fakultas: [],
-        jurusan: [],
+        // universitas: [],
+        // fakultas: [],
+        // jurusan: [],
         gender: [
           { label: "Pria", value: 0 },
           { label: "Wanita", value: 1 },
         ],
+        desiredjob: [],
         religion: [
           "Kristen",
           "Katolik",
