@@ -14,18 +14,17 @@ export default async ({ store }) => {
     };
 
     firebase.initializeApp(firebaseConfig);
-    // firebase.analytics();
 
     // Check if user signed in before. If yes set currentUser state in vuex
-    // firebase.auth().onAuthStateChanged(function (user) {
-    //     if (user) {
-    //         const currentUser: User = new User(
-    //             user.uid,
-    //             user.email!,
-    //             user.displayName!,
-    //             user.emailVerified
-    //         );
-    //         store.commit("firebase/setUser", currentUser);
-    //     }
-    // });
+    firebase.auth().onAuthStateChanged(function (user) {
+        // console.log(`Logged in as ${user.email}`);
+        if (user) {
+            const currentUser = {
+                uid: user.uid,
+                email: user.email,
+            };
+            // console.log(user.displayName);
+            store.commit("main/login", currentUser);
+        }
+    });
 }
