@@ -19,7 +19,8 @@ export default async ({ store }) => {
     // Check if user signed in before. If yes set currentUser state in vuex
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
-            store.commit("main/setLoginStatus", 0);
+
+            // loading firestore
             firebase
                 .firestore().collection("professionals").get().then((querySnapshot) => {
                     querySnapshot.forEach((doc) => {
@@ -30,7 +31,6 @@ export default async ({ store }) => {
                                 verified: user.emailVerified,
                                 name: doc.get("name"),
                                 birthdate: doc.get("birthday"),
-                                type_id: doc.get("type_id"),
                                 job_id: doc.get("job_id"),
                                 city_id: doc.get("city_id"),
                                 religion_id: doc.get("religion_d"),

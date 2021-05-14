@@ -66,15 +66,10 @@ export default {
   },
   computed: {
     isLoggedIn() {
-      // return this.$store.state.main.user.uid != "";
-      return this.$store.state.main.login.status;
+      return this.$store.state.main.user.uid != "";
     },
     label() {
-      if(this.$store.state.main.login.type == 0){
-      return this.$store.state.main.userProfessional.email;
-      } else {
-        return this.$store.state.main.userCompany.email;
-      }
+      return this.$store.state.main.user.email;
       // const user = this.$store.state.main.user;
       // if (this.isLoggedIn) {
       //   return user.email;

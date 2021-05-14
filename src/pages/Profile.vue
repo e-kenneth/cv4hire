@@ -10,7 +10,7 @@
     export default {
         computed: {
             user() {
-                return this.$store.state.main.login; 
+                return this.$store.state.main.user; 
             }
         },
     }
