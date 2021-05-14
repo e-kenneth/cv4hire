@@ -1,6 +1,8 @@
 export interface MainStateInterface {
   user: object | null;
-  options: object;// 0: not, 1: professional, 2: recruiter
+  dataProfessional: object;
+  dataCompany: object;
+  options: object; // 0: not, 1: professional, 2: recruiter
 }
 
 function state(): MainStateInterface {
@@ -9,14 +11,17 @@ function state(): MainStateInterface {
       uid: "",
       email: "",
       verified: false,
+      type: -1,
+    },
+    dataProfessional: {
       name: "",
       birthdate: "",
-      type_id: -1,
       job_id: -1,
       city_id: -1,
       religion_id: -1,
       gender_id: -1,
     },
+    dataCompany: {},
     options: {
       types: [
         { value: 0, label: "Professional" },

@@ -2,7 +2,7 @@
     <div>
         Profile
         {{user}}
-        
+        {{dataProfessional}}
     </div>
 </template>
 
@@ -11,6 +11,9 @@
         computed: {
             user() {
                 return this.$store.state.main.user; 
+            },
+            dataProfessional() {
+                return this.$store.state.main.dataProfessional; 
             }
         },
     }

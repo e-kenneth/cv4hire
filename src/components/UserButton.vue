@@ -2,7 +2,7 @@
   <div>
     <q-btn
       color="secondary"
-      icon="person"
+      :icon="icon"
       :label="label"
       @click="opened = true"
     />
@@ -12,7 +12,7 @@
           <q-btn
             class="q-mb-md"
             color="secondary"
-            label="Google Sign-in"
+            label="Masuk"
             to="/login/"
           />
           <q-btn
@@ -68,6 +68,13 @@ export default {
     isLoggedIn() {
       return this.$store.state.main.user.uid != "";
     },
+    icon() {
+      if (this.isLoggedIn) {
+        return "person";
+      } else {
+        return "person";
+      }
+    },
     label() {
       return this.$store.state.main.user.email;
       // const user = this.$store.state.main.user;
@@ -100,5 +107,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

@@ -99,7 +99,6 @@ export default {
         city_id: "",
         religion_id: "",
         gender_id: "",
-        type_id: 0,
       },
     };
   },
@@ -126,12 +125,20 @@ export default {
             .catch((error) => {
               console.error("Error writing document: ", error);
             });
-
+          firebase
+            .auth()
+            .currentUser.updateProfile({
+              displayName: 0,
+            })
+            .catch((error) => {
+              console.error(error);
+            });
           firebase
             .auth()
             .currentUser.sendEmailVerification()
-            .then(() => {})
-            .catch((error) => {});
+            .catch((error) => {
+              console.error(error);
+            });
         })
         .catch((error) => {
           console.log(error.code);
