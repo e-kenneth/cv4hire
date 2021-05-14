@@ -1,15 +1,34 @@
 export interface MainStateInterface {
-  user: object | null;
-  options: object;// 0: not, 1: professional, 2: recruiter
+  login: any,
+  userProfessional: {},
+  userCompany: {},
+  options: object; // 0: not, 1: professional, 2: recruiter
 }
 
 function state(): MainStateInterface {
   return {
-    user: {
+    login: {
+      status: false as boolean,
+      type: -1,
+    },
+    userProfessional: {
       uid: "",
       email: "",
+      verified: false,
+      name: "",
+      birthdate: "",
+      type_id: -1,
+      job_id: -1,
+      city_id: -1,
+      religion_id: -1,
+      gender_id: -1,
     },
+    userCompany: {},
     options: {
+      types: [
+        { value: 0, label: "Professional" },
+        { value: 1, label: "Perusahaan" },
+      ],
       genders: [
         { value: 0, label: "Pria" },
         { value: 1, label: "Wanita" },

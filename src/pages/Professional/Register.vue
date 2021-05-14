@@ -14,21 +14,21 @@
       </div>
       <q-input
         color="secondary"
-        v-model="user.email"
+        v-model="auth.email"
         type="email"
         label="Alamat email"
         required="required"
       />
       <q-input
         color="secondary"
-        v-model="user.password"
+        v-model="auth.password"
         type="password"
         label="Kata sandi"
         required="required"
       />
       <q-input
         color="secondary"
-        v-model="user.password"
+        v-model="auth.password"
         type="password"
         label="Ulang sandi"
         required="required"
@@ -86,10 +86,12 @@ import "firebase/firestore";
 export default {
   data() {
     return {
-      user: {
+      auth: {
         email: "",
         password: "",
         password_repeat: "",
+      },
+      user: {
         name: "",
         birthdate: "",
         // birthdate: new Date().toJSON().slice(0, 10).replace(/-/g, "-"),
@@ -97,6 +99,7 @@ export default {
         city_id: "",
         religion_id: "",
         gender_id: "",
+        type_id: 0,
       },
     };
   },
@@ -109,21 +112,26 @@ export default {
     onSubmit() {
       firebase
         .auth()
-        .createUserWithEmailAndPassword(this.user.email, this.user.password)
+        .createUserWithEmailAndPassword(this.auth.email, this.auth.password)
         .then((userCredential) => {
-          var user = userCredential.user;
-          // user
-          //   .updateProfile({
-          //     displayName: 0,
-          //   })
-          //   .then(
-          //     function () {
-          //       console.log("Updated");
-          //     },
-          //     function (error) {
-          //       console.log("Error happened");
-          //     }
-          //   );
+          let user = userCredential.user;
+          firebase
+            .firestore()
+            .collection("professionals")
+            .doc(user.uid)
+            .set(this.user)
+            .then(() => {
+              console.log("Document successfully written!");
+            })
+            .catch((error) => {
+              console.error("Error writing document: ", error);
+            });
+
+          firebase
+            .auth()
+            .currentUser.sendEmailVerification()
+            .then(() => {})
+            .catch((error) => {});
         })
         .catch((error) => {
           console.log(error.code);
@@ -137,5 +145,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

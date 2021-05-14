@@ -1,5 +1,6 @@
 import firebase from "firebase/app";
 import "firebase/auth";
+import "firebase/firestore";
 import "firebase/storage";
 
 export default async ({ store }) => {
@@ -17,14 +18,28 @@ export default async ({ store }) => {
 
     // Check if user signed in before. If yes set currentUser state in vuex
     firebase.auth().onAuthStateChanged(function (user) {
-        // console.log(`Logged in as ${user.email}`);
         if (user) {
-            const currentUser = {
-                uid: user.uid,
-                email: user.email,
-            };
-            // console.log(user.displayName);
-            store.commit("main/login", currentUser);
+            store.commit("main/setLoginStatus", 0);
+            firebase
+                .firestore().collection("professionals").get().then((querySnapshot) => {
+                    querySnapshot.forEach((doc) => {
+                        if (doc.id == user.uid) {
+                            const currentUser = {
+                                uid: user.uid,
+                                email: user.email,
+                                verified: user.emailVerified,
+                                name: doc.get("name"),
+                                birthdate: doc.get("birthday"),
+                                type_id: doc.get("type_id"),
+                                job_id: doc.get("job_id"),
+                                city_id: doc.get("city_id"),
+                                religion_id: doc.get("religion_d"),
+                                gender_id: doc.get("gender_id"),
+                            };
+                            store.commit("main/login", currentUser);
+                        }
+                    });
+                });
         }
     });
 }
