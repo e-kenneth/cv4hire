@@ -16,8 +16,8 @@ function state(): MainStateInterface {
     dataProfessional: {
       name: "",
       birthdate: "",
-      job_id: -1,
-      city_id: -1,
+      job_id: [],
+      city_id: [],
       religion_id: -1,
       gender_id: -1,
     },

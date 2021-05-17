@@ -2,7 +2,7 @@
   "name": "cv4hire",
   "version": "0.0.1",
   "description": "A Quasar Framework app",
-  "productName": "CV4Hire",
+  "productName": "CVForHire",
   "author": "Vicktor Hutama <vicktor.hutama@gmail.com>",
   "private": true,
   "scripts": {

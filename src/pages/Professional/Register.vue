@@ -44,7 +44,9 @@
       <q-select
         color="secondary"
         v-model="user.city_id"
-        :options="options.cities"
+        :options="temp.optionCity"
+        use-input
+        @filter="filterCityFn"
         emit-value
         map-options
         label="Domisili"
@@ -86,6 +88,10 @@ import "firebase/firestore";
 export default {
   data() {
     return {
+      // filterCity: "",
+      temp: {
+        optionCity: this.$store.state.main.options.cities,
+      },
       auth: {
         email: "",
         password: "",
@@ -106,7 +112,23 @@ export default {
     options() {
       return this.$store.state.main.options;
     },
+    // cities() {
+    //   if (this.filterCity === "") {
+    //     return this.options.cities;
+    //   } else {
+    //     let newCities = [];
+    //     this.options.cities.forEach((city) => {
+    //       if (city.label.includes(this.filterCity)) {
+    //         newCities.push(city);
+    //       }
+    //     });
+    //     return newCities;
+    //   }
+    // },
   },
+  // mounted () {
+  //   this.optionCity = this.$store.state.main.options.cities;
+  // },
   methods: {
     onSubmit() {
       firebase
@@ -147,6 +169,24 @@ export default {
             color: "red",
           });
         });
+    },
+    filterCityFn(val, update) {
+      if (val === "") {
+        update(() => {
+          this.temp.optionCity = this.options.cities;
+        });
+        return;
+      }
+
+      update(() => {
+        // const needle = val.toLowerCase();
+        // this.temp.optionCity = this.options.cities.filter(
+        //   (v) => v.toLowerCase().indexOf(needle) > -1
+        // );
+        this.temp.optionCity.forEach(city => {
+          
+        });
+      });
     },
   },
 };
