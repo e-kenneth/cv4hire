@@ -37,6 +37,9 @@
         color="secondary"
         v-model="user.job_id"
         :options="options.jobs"
+        use-chips
+        multiple
+        max-values="3"
         emit-value
         map-options
         label="Pekerjaan yang diinginkan"
@@ -45,6 +48,9 @@
         color="secondary"
         v-model="user.city_id"
         :options="temp.optionCity"
+        use-chips
+        multiple
+        max-values="3"
         use-input
         @filter="filterCityFn"
         emit-value
@@ -88,9 +94,8 @@ import "firebase/firestore";
 export default {
   data() {
     return {
-      // filterCity: "",
       temp: {
-        optionCity: this.$store.state.main.options.cities,
+        optionCity: [],
       },
       auth: {
         email: "",
@@ -100,9 +105,8 @@ export default {
       user: {
         name: "",
         birthdate: "",
-        // birthdate: new Date().toJSON().slice(0, 10).replace(/-/g, "-"),
-        job_id: "",
-        city_id: "",
+        job_id: [],
+        city_id: [],
         religion_id: "",
         gender_id: "",
       },
@@ -112,23 +116,12 @@ export default {
     options() {
       return this.$store.state.main.options;
     },
-    // cities() {
-    //   if (this.filterCity === "") {
-    //     return this.options.cities;
-    //   } else {
-    //     let newCities = [];
-    //     this.options.cities.forEach((city) => {
-    //       if (city.label.includes(this.filterCity)) {
-    //         newCities.push(city);
-    //       }
-    //     });
-    //     return newCities;
-    //   }
-    // },
   },
-  // mounted () {
-  //   this.optionCity = this.$store.state.main.options.cities;
-  // },
+  mounted() {
+    this.options.cities.forEach((city) => {
+      this.temp.optionCity.push(city);
+    });
+  },
   methods: {
     onSubmit() {
       firebase
@@ -179,12 +172,14 @@ export default {
       }
 
       update(() => {
-        // const needle = val.toLowerCase();
-        // this.temp.optionCity = this.options.cities.filter(
-        //   (v) => v.toLowerCase().indexOf(needle) > -1
-        // );
-        this.temp.optionCity.forEach(city => {
-          
+        const needle = val.toLowerCase();
+
+        this.temp.optionCity = [];
+
+        this.options.cities.forEach((city) => {
+          if (city.label.toLowerCase().includes(needle)) {
+            this.temp.optionCity.push(city);
+          }
         });
       });
     },
