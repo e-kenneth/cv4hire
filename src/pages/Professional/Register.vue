@@ -172,12 +172,10 @@ export default {
       }
 
       update(() => {
-        const needle = val.toLowerCase();
-
         this.temp.optionCity = [];
 
         this.options.cities.forEach((city) => {
-          if (city.label.toLowerCase().includes(needle)) {
+          if (city.label.toLowerCase().includes(val.toLowerCase())) {
             this.temp.optionCity.push(city);
           }
         });
