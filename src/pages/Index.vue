@@ -1,6 +1,5 @@
 <template>
   <div>
-    Test<br>
     {{ jobCategories }}
   </div>
 </template>
@@ -9,7 +8,7 @@
 export default {
   computed: {
     jobCategories() {
-      return this.$store.state.main.jobCategories;
+      return this.$store.state.main.options.jobs;
     },
   },
 };

@@ -2,18 +2,18 @@
   <div>
     <q-btn
       color="secondary"
-      icon="person"
+      :icon="icon"
       :label="label"
       @click="opened = true"
     />
     <q-dialog v-model="opened">
-      <q-card v-if="loginState == 0">
+      <q-card v-if="!isLoggedIn">
         <q-card-section class="column">
           <q-btn
             class="q-mb-md"
             color="secondary"
-            label="Google Sign-in"
-            @click="dummyLogin"
+            label="Masuk"
+            to="/login/"
           />
           <q-btn
             class="q-mb-md"
@@ -47,7 +47,7 @@
             to="Profile"
             @click="opened = false"
           />
-          <q-btn color="secondary" label="Keluar" @click="dummyLogout" />
+          <q-btn color="secondary" label="Keluar" @click="logout" />
         </q-card-section>
       </q-card>
     </q-dialog>
@@ -55,6 +55,8 @@
 </template>
 
 <script>
+import firebase from "firebase/app";
+import "firebase/auth";
 
 export default {
   data() {
@@ -63,29 +65,46 @@ export default {
     };
   },
   computed: {
-    loginState() {
-      return this.$store.state.main.loginState;
+    isLoggedIn() {
+      return this.$store.state.main.user.uid != "";
+    },
+    icon() {
+      if (this.isLoggedIn) {
+        return "person";
+      } else {
+        return "person";
+      }
     },
     label() {
-      if (this.loginState == 0) {
-        return "";
-      } else if (this.loginState == 1) {
-        return "Dummy User";
-      }
+      return this.$store.state.main.user.email;
+      // const user = this.$store.state.main.user;
+      // if (this.isLoggedIn) {
+      //   return user.email;
+      // } else {
+      //   return "";
+      // }
     },
   },
   methods: {
-    dummyLogin() {
-      this.$store.commit("main/changeLoginState", 1);
-      this.opened = false;
-    },
-    dummyLogout() {
-      this.$store.commit("main/changeLoginState", 0);
+    logout() {
+      this.$store.commit("main/logout");
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          // Sign-out successful.
+        })
+        .catch((error) => {
+          console.log(error.code);
+          this.$q.notify({
+            message: error.message,
+            color: "red",
+          });
+        });
       this.opened = false;
     },
   },
 };
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

@@ -1,5 +1,6 @@
 import firebase from "firebase/app";
 import "firebase/auth";
+import "firebase/firestore";
 import "firebase/storage";
 
 export default async ({ store }) => {
@@ -14,18 +15,38 @@ export default async ({ store }) => {
     };
 
     firebase.initializeApp(firebaseConfig);
-    // firebase.analytics();
 
     // Check if user signed in before. If yes set currentUser state in vuex
-    // firebase.auth().onAuthStateChanged(function (user) {
-    //     if (user) {
-    //         const currentUser: User = new User(
-    //             user.uid,
-    //             user.email!,
-    //             user.displayName!,
-    //             user.emailVerified
-    //         );
-    //         store.commit("firebase/setUser", currentUser);
-    //     }
-    // });
+    firebase.auth().onAuthStateChanged(function (user) {
+        if (user) {
+            // cek tipe dari displayName?
+            const currentUser = {
+                uid: user.uid,
+                email: user.email,
+                verified: user.emailVerified,
+                type: user.displayName,
+            };
+            store.commit("main/login", currentUser);
+            if (user.displayName == 0) {
+                firebase
+                    .firestore().collection("professionals").get().then((querySnapshot) => {
+                        querySnapshot.forEach((doc) => {
+                            if (doc.id == user.uid) {
+                                const dataProfessional = {
+                                    name: doc.get("name"),
+                                    birthdate: doc.get("birthday"),
+                                    job_id: doc.get("job_id"),
+                                    city_id: doc.get("city_id"),
+                                    religion_id: doc.get("religion_d"),
+                                    gender_id: doc.get("gender_id"),
+                                }
+                                store.commit("main/dataProfessional", dataProfessional);
+                            }
+                        });
+                    });
+            } else {
+// perusahaan
+            }
+        }
+    });
 }

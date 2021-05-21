@@ -1,13 +1,21 @@
 <template>
     <div>
         Profile
-        {{$route.params}}
+        {{user}}
+        {{dataProfessional}}
     </div>
 </template>
 
 <script>
     export default {
-        
+        computed: {
+            user() {
+                return this.$store.state.main.user; 
+            },
+            dataProfessional() {
+                return this.$store.state.main.dataProfessional; 
+            }
+        },
     }
 </script>
 
