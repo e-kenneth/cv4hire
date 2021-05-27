@@ -10,7 +10,16 @@ const mutation: MutationTree<MainStateInterface> = {
       uid: "",
       email: "",
       verified: false,
-      type_id: -1,
+      type: -1,
+    };
+    state.dataProfessional = {
+      name: "",
+      username: "",
+      birthdate: "",
+      job_id: [],
+      city_id: [],
+      religion_id: -1,
+      gender_id: -1,
     };
   },
   dataProfessional(state, payload) {
