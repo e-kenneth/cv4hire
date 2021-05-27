@@ -34,6 +34,7 @@ export default async ({ store }) => {
                             if (doc.id == user.uid) {
                                 const dataProfessional = {
                                     name: doc.get("name"),
+                                    username: doc.get("username"),
                                     birthdate: doc.get("birthday"),
                                     job_id: doc.get("job_id"),
                                     city_id: doc.get("city_id"),

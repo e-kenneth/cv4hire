@@ -15,6 +15,7 @@ function state(): MainStateInterface {
     },
     dataProfessional: {
       name: "",
+      username: "",
       birthdate: "",
       job_id: [],
       city_id: [],
@@ -32,6 +33,7 @@ function state(): MainStateInterface {
         { value: 1, label: "Wanita" },
       ],
       jobs: [
+        { value: 0, label: "Lainnya" },
         { value: 1, label: "Akuntansi/Keuangan" },
         { value: 2, label: "Sumber Daya Manusia/Personalia" },
         { value: 3, label: "Penjualan/Pemasaran" },
@@ -45,7 +47,6 @@ function state(): MainStateInterface {
         { value: 11, label: "Bangunan/Konstruksi" },
         { value: 12, label: "Sains" },
         { value: 13, label: "Layanan Kesehatan" },
-        { value: 14, label: "Lainnya" },
       ],
       religions: [
         { value: 1, label: "Kristen" },
