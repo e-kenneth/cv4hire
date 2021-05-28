@@ -9,7 +9,7 @@ const mutation: MutationTree<MainStateInterface> = {
     state.user = {
       uid: "",
       email: "",
-      verified: false,
+      emailVerified: false,
       type: -1,
     };
     state.dataProfessional = {

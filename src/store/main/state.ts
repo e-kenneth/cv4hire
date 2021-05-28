@@ -10,7 +10,7 @@ function state(): MainStateInterface {
     user: {
       uid: "",
       email: "",
-      verified: false,
+      emailVerified: false,
       type: -1,
     },
     dataProfessional: {
@@ -21,6 +21,7 @@ function state(): MainStateInterface {
       city_id: [],
       religion_id: -1,
       gender_id: -1,
+      userVerified: false,
     },
     dataCompany: {},
     options: {

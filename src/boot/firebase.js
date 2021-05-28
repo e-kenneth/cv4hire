@@ -23,7 +23,7 @@ export default async ({ store }) => {
             const currentUser = {
                 uid: user.uid,
                 email: user.email,
-                verified: user.emailVerified,
+                emailVerified: user.emailVerified,
                 type: user.displayName,
             };
             store.commit("main/login", currentUser);
