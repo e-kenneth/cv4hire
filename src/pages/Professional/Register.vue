@@ -63,7 +63,7 @@
         :options="options.genders"
         emit-value
         map-options
-        label="Gender"
+        label="Kelamin"
       />
       <q-select
         color="secondary"
@@ -71,7 +71,7 @@
         :options="options.religions"
         emit-value
         map-options
-        label="Religion"
+        label="Agama"
       />
       <div>
         <q-btn label="Daftar sekarang" type="submit" color="secondary" />

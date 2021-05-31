@@ -47,6 +47,10 @@ function state(): MainStateInterface {
         { value: 13, label: "Layanan Kesehatan" },
         { value: 14, label: "Lainnya" },
       ],
+
+      jobsectors:[
+        { value: 14, label: "Lainnya" },
+      ],
       religions: [
         { value: 1, label: "Kristen" },
         { value: 2, label: "Katolik" },
