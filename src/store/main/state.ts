@@ -10,16 +10,18 @@ function state(): MainStateInterface {
     user: {
       uid: "",
       email: "",
-      verified: false,
+      emailVerified: false,
       type: -1,
     },
     dataProfessional: {
       name: "",
+      username: "",
       birthdate: "",
       job_id: [],
       city_id: [],
       religion_id: -1,
       gender_id: -1,
+      userVerified: false,
     },
     dataCompany: {},
     options: {
@@ -32,6 +34,7 @@ function state(): MainStateInterface {
         { value: 1, label: "Wanita" },
       ],
       jobs: [
+        { value: 0, label: "Lainnya" },
         { value: 1, label: "Akuntansi/Keuangan" },
         { value: 2, label: "Sumber Daya Manusia/Personalia" },
         { value: 3, label: "Penjualan/Pemasaran" },
@@ -45,7 +48,6 @@ function state(): MainStateInterface {
         { value: 11, label: "Bangunan/Konstruksi" },
         { value: 12, label: "Sains" },
         { value: 13, label: "Layanan Kesehatan" },
-        { value: 14, label: "Lainnya" },
       ],
 
       jobsectors:[

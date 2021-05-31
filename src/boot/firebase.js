@@ -23,7 +23,7 @@ export default async ({ store }) => {
             const currentUser = {
                 uid: user.uid,
                 email: user.email,
-                verified: user.emailVerified,
+                emailVerified: user.emailVerified,
                 type: user.displayName,
             };
             store.commit("main/login", currentUser);
@@ -34,6 +34,7 @@ export default async ({ store }) => {
                             if (doc.id == user.uid) {
                                 const dataProfessional = {
                                     name: doc.get("name"),
+                                    username: doc.get("username"),
                                     birthdate: doc.get("birthday"),
                                     job_id: doc.get("job_id"),
                                     city_id: doc.get("city_id"),

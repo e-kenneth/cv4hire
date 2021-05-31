@@ -104,6 +104,7 @@ export default {
       },
       user: {
         name: "",
+        username: "",
         birthdate: "",
         job_id: [],
         city_id: [],
@@ -129,6 +130,7 @@ export default {
         .createUserWithEmailAndPassword(this.auth.email, this.auth.password)
         .then((userCredential) => {
           let user = userCredential.user;
+          this.user.username = user.uid.substring(0,6).toUpperCase();
           firebase
             .firestore()
             .collection("professionals")
@@ -172,12 +174,10 @@ export default {
       }
 
       update(() => {
-        const needle = val.toLowerCase();
-
         this.temp.optionCity = [];
 
         this.options.cities.forEach((city) => {
-          if (city.label.toLowerCase().includes(needle)) {
+          if (city.label.toLowerCase().includes(val.toLowerCase())) {
             this.temp.optionCity.push(city);
           }
         });

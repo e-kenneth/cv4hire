@@ -76,7 +76,7 @@ export default {
       }
     },
     label() {
-      return this.$store.state.main.user.email;
+      return this.$store.state.main.dataProfessional.username;
       // const user = this.$store.state.main.user;
       // if (this.isLoggedIn) {
       //   return user.email;
