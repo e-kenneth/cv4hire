@@ -76,8 +76,8 @@
 
       <q-select
         color="secondary"
-        v-model="user.bidangbisnis"
-        :options="options.bidangbisnis"
+        v-model="user.business_type_id"
+        :options="options.jobSectors"
         emit-value
         map-options
         label="Bidang bisnis"
@@ -104,10 +104,10 @@ export default {
     return {
       user: {
         address: "",
-        bidangbisnis: "",
+        business_type_id: "",
         name: "",
         npwp: "",
-        phonenum: "",
+        phone_num: "",
         website: "",
       },
       auth: {
@@ -138,7 +138,7 @@ export default {
           firebase
             .auth()
             .currentUser.updateProfile({
-              displayName: 0,
+              displayName: 1,
             })
             .catch((error) => {
               console.error(error);

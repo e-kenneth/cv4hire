@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="isSelfProfile">
-      {{ user }} a
+      {{ user }}
     </div>
     <div v-if="currentProfessional != null">{{ currentProfessional }}</div>
     <div v-else>Professional tidak ditemukan</div>

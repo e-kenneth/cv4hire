@@ -23,7 +23,14 @@ function state(): MainStateInterface {
       gender_id: -1,
       userVerified: false,
     },
-    dataCompany: {},
+    dataCompany: {
+      address: "",
+      business_type_id: "",
+      name: "",
+      npwp: "",
+      phone_num: "",
+      website: "",
+    },
     options: {
       types: [
         { value: 0, label: "Professional" },
@@ -49,9 +56,8 @@ function state(): MainStateInterface {
         { value: 12, label: "Sains" },
         { value: 13, label: "Layanan Kesehatan" },
       ],
-
-      jobsectors:[
-        { value: 14, label: "Lainnya" },
+      jobSectors:[
+        { value: 0, label: "Lainnya" },
       ],
       religions: [
         { value: 1, label: "Kristen" },

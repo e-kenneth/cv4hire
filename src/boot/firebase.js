@@ -27,6 +27,7 @@ export default async ({ store }) => {
                 type: user.displayName,
             };
             store.commit("main/login", currentUser);
+            console.log(store.state.main.user);
             if (user.displayName == 0) {
                 firebase
                     .firestore().collection("professionals").get().then((querySnapshot) => {
@@ -45,8 +46,25 @@ export default async ({ store }) => {
                             }
                         });
                     });
-            } else {
-// perusahaan
+            } else if (user.displayName == 1) {
+                console.log(`printing companies for ${user.uid}`);
+                firebase
+                    .firestore().collection("companies").get().then((querySnapshot) => {
+                        querySnapshot.forEach((doc) => {
+                            if (doc.id == user.uid) {
+                                const dataCompany = {
+                                    address: doc.get(""),
+                                    business_type_id: doc.get(""),
+                                    name: doc.get(""),
+                                    npwp: doc.get(""),
+                                    phone_num: doc.get(""),
+                                    website: doc.get(""),
+                                }
+                                store.commit("main/dataCompany", dataCompany);
+                                console.log(store.state.main.dataCompany);
+                            }
+                        });
+                    });
             }
         }
     });

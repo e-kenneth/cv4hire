@@ -9,12 +9,7 @@
     <q-dialog v-model="opened">
       <q-card v-if="!isLoggedIn">
         <q-card-section class="column">
-          <q-btn
-            class="q-mb-md"
-            color="secondary"
-            label="Masuk"
-            to="/login/"
-          />
+          <q-btn class="q-mb-md" color="secondary" label="Masuk" to="/login/" />
           <q-btn
             class="q-mb-md"
             color="secondary"
@@ -76,13 +71,11 @@ export default {
       }
     },
     label() {
-      return this.$store.state.main.dataProfessional.username;
-      // const user = this.$store.state.main.user;
-      // if (this.isLoggedIn) {
-      //   return user.email;
-      // } else {
-      //   return "";
-      // }
+      if (this.$store.state.main.user.type == 0) {
+        return this.$store.state.main.dataProfessional.username;
+      } else if (this.$store.state.main.user.type == 1) {
+        return this.$store.state.main.dataCompany.name;
+      }
     },
   },
   methods: {

@@ -25,6 +25,9 @@ const mutation: MutationTree<MainStateInterface> = {
   dataProfessional(state, payload) {
     state.dataProfessional = payload;
   },
+  dataCompany(state, payload) {
+    state.dataCompany = payload;
+  },
 };
 
 export default mutation;
