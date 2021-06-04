@@ -70,25 +70,8 @@
 import EssentialLink from "components/EssentialLink.vue";
 import UserButton from "components/UserButton.vue";
 
-const linksList = [
-  {
-    title: "Home",
-    icon: "school",
-    link: "/",
-  },
-  {
-    title: "Browse",
-    icon: "school",
-    link: "/browse/",
-  },
-  {
-    title: "Profile",
-    icon: "school",
-    link: "/profile/",
-  },
-];
-
-import { defineComponent, ref, computed } from "vue";
+import { defineComponent, ref, computed, reactive } from "vue";
+import { useStore } from "vuex";
 import { useQuasar } from "quasar";
 
 export default defineComponent({
@@ -102,6 +85,37 @@ export default defineComponent({
   setup() {
     const leftDrawerOpen = ref(false);
     const $q = useQuasar();
+
+    const store = useStore();
+ 
+    const essentialLinks = computed(() => {
+      let links = [
+        {
+          title: "Home",
+          icon: "school",
+          link: "/",
+        },
+        {
+          title: "Browse",
+          icon: "school",
+          link: "/browse/",
+        },
+      ];
+      if (store.state.main.user.type == 0) {
+        links.push({
+          title: "Profile",
+          icon: "school",
+          link: "/profile/",
+        });
+      } else if (store.state.main.user.type == 1) {
+        links.push({
+          title: "Profile",
+          icon: "school",
+          link: "/company/profile/",
+        });
+      }
+      return links;
+    });
 
     // $q.screen.setSizes({ sm: 0, md: 800, lg: 1000, xl: 1279 });
 
@@ -120,7 +134,7 @@ export default defineComponent({
     };
 
     return {
-      essentialLinks: linksList,
+      essentialLinks,
       leftDrawerOpen,
       toggleLeftDrawer() {
         leftDrawerOpen.value = !leftDrawerOpen.value;
