@@ -53,12 +53,13 @@ export default async ({ store }) => {
                         querySnapshot.forEach((doc) => {
                             if (doc.id == user.uid) {
                                 const dataCompany = {
-                                    address: doc.get(""),
-                                    business_type_id: doc.get(""),
-                                    name: doc.get(""),
-                                    npwp: doc.get(""),
-                                    phone_num: doc.get(""),
-                                    website: doc.get(""),
+                                    address: doc.get("address"),
+                                    business_type_id: doc.get("business_type_id"),
+                                    name: doc.get("name"),
+                                    npwp: doc.get("npwp"),
+                                    phone_num: doc.get("phone_num"),
+                                    about: doc.get("about"),
+                                    website: doc.get("website"),
                                 }
                                 store.commit("main/dataCompany", dataCompany);
                                 console.log(store.state.main.dataCompany);

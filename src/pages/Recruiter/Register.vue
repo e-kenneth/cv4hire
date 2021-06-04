@@ -9,6 +9,19 @@
         label="Nama Perusahaan"
         required="required"
       />
+      <q-file v-model="temp.photo" label="Logo perusahaan" accept="image/*">
+        <template v-slot:prepend>
+          <q-icon name="add_photo_alternate" />
+        </template>
+      </q-file>
+      <q-select
+        color="secondary"
+        v-model="user.business_type_id"
+        :options="options.jobSectors"
+        emit-value
+        map-options
+        label="Bidang bisnis"
+      />
       <q-input
         color="secondary"
         v-model="user.address"
@@ -24,24 +37,9 @@
         required="required"
       />
 
-      <!-- <q-select color="secondary" -->
-      <!-- v-model="user.domisili_id"
-        :options="options.kota"
-        emit-value
-        map-options
-        label="Domisili" -->
-      <!-- />  -->
-      <!-- 
-      <q-input color="secondary"
-        v-model="user."
-        type="int"
-        label="Nomer telpon kantor"
-        required="required"
-      /> -->
-
       <q-input
         color="secondary"
-        v-model="user.phonenum"
+        v-model="user.phone_num"
         type="int"
         label="Nomer HP/ WA"
         required="required"
@@ -71,17 +69,16 @@
         color="secondary"
         v-model="user.website"
         type="text"
-        label="website perusahaan (jika mempunyai)"
+        label="Website perusahaan"
+      />
+      <q-input
+        color="secondary"
+        v-model="user.about"
+        type="text"
+        autogrow=""
+        label="Tentang perusahaan"
       />
 
-      <q-select
-        color="secondary"
-        v-model="user.business_type_id"
-        :options="options.jobSectors"
-        emit-value
-        map-options
-        label="Bidang bisnis"
-      />
       <div>
         <q-btn label="Daftar sekarang" type="submit" color="secondary" />
         <q-btn
@@ -99,6 +96,7 @@
 import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
+import "firebase/storage";
 export default {
   data() {
     return {
@@ -109,6 +107,10 @@ export default {
         npwp: "",
         phone_num: "",
         website: "",
+        about: "",
+      },
+      temp: {
+        photo: null,
       },
       auth: {
         email: "",
@@ -143,6 +145,11 @@ export default {
             .catch((error) => {
               console.error(error);
             });
+          let storageRef = firebase
+            .storage()
+            .ref()
+            .child(`recruiters/${user.uid}/logo`);
+          storageRef.put(this.temp.photo).then(() => console.log("Upload Success"));
           firebase
             .auth()
             .currentUser.sendEmailVerification()
@@ -167,5 +174,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

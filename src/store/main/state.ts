@@ -29,6 +29,7 @@ function state(): MainStateInterface {
       name: "",
       npwp: "",
       phone_num: "",
+      about: "",
       website: "",
     },
     options: {
