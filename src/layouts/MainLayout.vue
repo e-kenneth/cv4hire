@@ -32,14 +32,14 @@
         <q-space />
 
         <!-- <div>Quasar v{{ $q.version }}</div> -->
-        <div>
+        <!-- <div>
           <q-btn
             color="secondary"
             icon="brightness_high"
             class="q-mr-md"
             @click="darkMode.toggle"
           />
-        </div>
+        </div> -->
         <div><UserButton /></div>
       </q-toolbar>
     </q-header>
@@ -132,6 +132,7 @@ export default defineComponent({
         $q.dark.toggle();
       },
     };
+    
 
     return {
       essentialLinks,
