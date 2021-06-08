@@ -62,7 +62,7 @@
             to="Profile"
             @click="opened = false"
           />
-          <q-btn color="secondary" label="Keluar" @click="logout" />
+          <q-btn class="q-mb-md" color="secondary" label="Keluar" @click="logout" />
           <q-btn
             class="q-mb-none"
             color="secondary"
