@@ -1,11 +1,24 @@
 <template>
   <div>
-    <q-btn
+    <div class="row">
+      <q-img
+        :src="photoURL"
+        class="photoButton"
+        spinner-color="primary"
+        spinner-size="82px"
+        @click="opened = true"
+      />
+      <div v-if="isLoggedIn" class="photoLabel" @click="opened = true">
+        {{ label }}
+      </div>
+    </div>
+
+    <!-- <q-btn
       color="secondary"
       :icon="icon"
       :label="label"
       @click="opened = true"
-    />
+    /> -->
     <q-dialog v-model="opened">
       <q-card v-if="!isLoggedIn">
         <q-card-section class="column">
@@ -28,6 +41,7 @@
       </q-card>
       <q-card v-else>
         <q-card-section class="column">
+          <div class="menuLabel">{{ label }}</div>
           <q-btn
             class="q-mb-md"
             color="secondary"
@@ -52,11 +66,13 @@
 <script>
 import firebase from "firebase/app";
 import "firebase/auth";
+import "firebase/storage";
 
 export default {
   data() {
     return {
       opened: false,
+      photoURL: "ui_elements/login.png",
     };
   },
   computed: {
@@ -78,6 +94,14 @@ export default {
       }
     },
   },
+  watch: {
+    "$store.state.main.user.uid"(newValue, oldValue) {
+      this.getPhotoURL();
+    },
+  },
+  mounted() {
+    this.getPhotoURL();
+  },
   methods: {
     logout() {
       this.$store.commit("main/logout");
@@ -96,8 +120,75 @@ export default {
         });
       this.opened = false;
     },
+    getPhotoURL() {
+      if (this.$store.state.main.user.uid != "") {
+        if (this.$store.state.main.user.type == 0) {
+          firebase
+            .storage()
+            .ref(`professionals/${this.$store.state.main.user.uid}/photo`)
+            .getDownloadURL()
+            .then((url) => {
+              this.photoURL = url;
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        } else if (this.$store.state.main.user.type == 1) {
+          firebase
+            .storage()
+            .ref(`recruiters/${this.$store.state.main.user.uid}/logo`)
+            .getDownloadURL()
+            .then((url) => {
+              this.photoURL = url;
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        }
+      } else {
+        this.photoURL = "ui_elements/login.png";
+      }
+    },
   },
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.menuLabel{
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
+.photoButton {
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  background-color: rgb(255, 255, 255);
+  border-radius: 50%;
+  border: 2px solid white;
+}
+.photoLabel {
+  cursor: pointer;
+  transition: 1s all;
+  max-width: 0;
+  background-color: white;
+  color: $primary;
+  font-size: 16px;
+  padding: 7px 0;
+  border-radius: 5px;
+}
+
+.photoButton:hover + .photoLabel {
+  max-width: 200px;
+  padding: 7px 10px;
+  margin-left: 5px;
+}
+
+.photoLabel:hover {
+  max-width: 200px;
+  padding: 7px 10px;
+  margin-left: 5px;
+}
+</style>
