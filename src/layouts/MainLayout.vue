@@ -70,7 +70,7 @@
 import EssentialLink from "components/EssentialLink.vue";
 import UserButton from "components/UserButton.vue";
 
-import { defineComponent, ref, computed, reactive } from "vue";
+import { defineComponent, ref, computed, reactive, watch } from "vue";
 import { useStore } from "vuex";
 import { useQuasar } from "quasar";
 
@@ -127,12 +127,12 @@ export default defineComponent({
       }
     });
 
-    const darkMode = {
-      toggle: () => {
-        $q.dark.toggle();
-      },
-    };
+    const darkMode = computed(() => store.state.main.settings.darkMode);
     
+    watch(darkMode, (newValue, oldValue) => {
+      console.log(newValue);
+      $q.dark.toggle();
+    })
 
     return {
       essentialLinks,
@@ -140,7 +140,6 @@ export default defineComponent({
       toggleLeftDrawer() {
         leftDrawerOpen.value = !leftDrawerOpen.value;
       },
-      darkMode,
       orientation,
     };
   },

@@ -31,11 +31,17 @@
             to="/professional/register/"
           />
           <q-btn
-            class="q-mb-none"
+            class="q-mb-md"
             color="secondary"
             label="Daftar sebagai perusahaan"
             @click="opened = false"
             to="/recruiter/register/"
+          />
+          <q-btn
+            class="q-mb-none"
+            color="secondary"
+            :label="darkModeLabel"
+            @click="toggleDarkMode"
           />
         </q-card-section>
       </q-card>
@@ -57,6 +63,12 @@
             @click="opened = false"
           />
           <q-btn color="secondary" label="Keluar" @click="logout" />
+          <q-btn
+            class="q-mb-none"
+            color="secondary"
+            :label="darkModeLabel"
+            @click="toggleDarkMode"
+          />
         </q-card-section>
       </q-card>
     </q-dialog>
@@ -76,6 +88,13 @@ export default {
     };
   },
   computed: {
+    darkModeLabel() {
+      if (this.$store.state.main.settings.darkMode) {
+        return "Mode terang";
+      } else {
+        return "Mode gelap";
+      }
+    },
     isLoggedIn() {
       return this.$store.state.main.user.uid != "";
     },
@@ -149,12 +168,15 @@ export default {
         this.photoURL = "ui_elements/login.png";
       }
     },
+    toggleDarkMode() {
+      this.$store.commit("main/toggleDarkMode");
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.menuLabel{
+.menuLabel {
   text-align: center;
   margin-bottom: 10px;
   font-size: 18px;

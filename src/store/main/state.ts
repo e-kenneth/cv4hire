@@ -1,4 +1,5 @@
 export interface MainStateInterface {
+  settings: any;
   user: object | null;
   dataProfessional: object;
   dataCompany: object;
@@ -7,6 +8,9 @@ export interface MainStateInterface {
 
 function state(): MainStateInterface {
   return {
+    settings: {
+      darkMode: true,
+    },
     user: {
       uid: "",
       email: "",

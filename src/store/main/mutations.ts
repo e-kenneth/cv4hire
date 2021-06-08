@@ -28,6 +28,9 @@ const mutation: MutationTree<MainStateInterface> = {
   dataCompany(state, payload) {
     state.dataCompany = payload;
   },
+  toggleDarkMode(state){
+    state.settings.darkMode = !state.settings.darkMode;
+  }
 };
 
 export default mutation;
