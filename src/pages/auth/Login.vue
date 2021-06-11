@@ -40,9 +40,7 @@ export default {
         .auth()
         .signInWithEmailAndPassword(this.user.email, this.user.password)
         .then((userCredential) => {
-          // Signed in
-          var user = userCredential.user;
-          // ...
+          // redirect
         })
         .catch((error) => {
           console.log(error.code);

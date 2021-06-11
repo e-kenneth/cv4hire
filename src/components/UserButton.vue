@@ -47,6 +47,11 @@
       </q-card>
       <q-card v-else>
         <q-card-section class="column">
+          <q-img
+            contain
+            :src="photoURL"
+            class="photoMenu"
+          />
           <div class="menuLabel">{{ label }}</div>
           <q-btn
             class="q-mb-md"
@@ -62,7 +67,12 @@
             to="Profile"
             @click="opened = false"
           />
-          <q-btn class="q-mb-md" color="secondary" label="Keluar" @click="logout" />
+          <q-btn
+            class="q-mb-md"
+            color="secondary"
+            label="Keluar"
+            @click="logout"
+          />
           <q-btn
             class="q-mb-none"
             color="secondary"
@@ -182,11 +192,16 @@ export default {
   font-size: 18px;
 }
 
+.photoMenu {
+  margin-bottom: 20px;
+  height: 60px;
+  object-fit: contain;
+}
+
 .photoButton {
   cursor: pointer;
   width: 40px;
   height: 40px;
-  object-fit: cover;
   background-color: rgb(255, 255, 255);
   border-radius: 50%;
   border: 2px solid white;

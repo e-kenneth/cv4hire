@@ -8,6 +8,11 @@
         type="text"
         label="Nama lengkap"
       />
+      <q-file v-model="temp.photo" label="Foto (formal)" accept="image/*">
+        <template v-slot:prepend>
+          <q-icon name="add_photo_alternate" />
+        </template>
+      </q-file>
       <div class="row">
         <div class="self-center q-pr-lg">Tanggal lahir:</div>
         <q-input color="secondary" type="date" v-model="user.birthdate" />
@@ -90,12 +95,14 @@
 import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
+import "firebase/storage";
 
 export default {
   data() {
     return {
       temp: {
         optionCity: [],
+        photo: null,
       },
       auth: {
         email: "",
@@ -110,6 +117,7 @@ export default {
         city_id: [],
         religion_id: "",
         gender_id: "",
+        userVerified: false,
       },
     };
   },
@@ -130,7 +138,7 @@ export default {
         .createUserWithEmailAndPassword(this.auth.email, this.auth.password)
         .then((userCredential) => {
           let user = userCredential.user;
-          this.user.username = user.uid.substring(0,6).toUpperCase();
+          this.user.username = user.uid.substring(0, 6).toUpperCase();
           firebase
             .firestore()
             .collection("professionals")
@@ -150,6 +158,14 @@ export default {
             .catch((error) => {
               console.error(error);
             });
+          let storageRef = firebase
+            .storage()
+            .ref()
+            .child(`professionals/${user.uid}/photo`);
+          storageRef.put(this.temp.photo).then(() => {
+            console.log("Upload Success");
+            window.location.href = "/";
+          });
           firebase
             .auth()
             .currentUser.sendEmailVerification()

@@ -126,36 +126,32 @@ export default {
         .createUserWithEmailAndPassword(this.auth.email, this.auth.password)
         .then((userCredential) => {
           let user = userCredential.user;
-          firebase
-            .firestore()
-            .collection("companies")
-            .doc(user.uid)
-            .set(this.user)
-            .then(() => {
-              console.log("Document successfully written!");
-            })
-            .catch((error) => {
-              console.error("Error writing document: ", error);
-            });
-          firebase
-            .auth()
-            .currentUser.updateProfile({
+          let operations = [];
+          operations.push(
+            firebase
+              .firestore()
+              .collection("companies")
+              .doc(user.uid)
+              .set(this.user)
+          );
+          operations.push(
+            firebase.auth().currentUser.updateProfile({
               displayName: 1,
             })
-            .catch((error) => {
-              console.error(error);
-            });
+          );
           let storageRef = firebase
             .storage()
             .ref()
             .child(`recruiters/${user.uid}/logo`);
-          storageRef.put(this.temp.photo).then(() => console.log("Upload Success"));
-          firebase
-            .auth()
-            .currentUser.sendEmailVerification()
-            .catch((error) => {
-              console.error(error);
-            });
+          operations.push(
+            storageRef.put(this.temp.photo).then(() => {
+              console.log("Upload Success");
+            })
+          );
+          operations.push(firebase.auth().currentUser.sendEmailVerification());
+          Promise.all(operations).then(() => {
+            window.location.href = "/";
+          });
         })
         .catch((error) => {
           console.log(error.code);
