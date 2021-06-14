@@ -51,6 +51,7 @@
             contain
             :src="photoURL"
             class="photoMenu"
+            :ratio="1"
           />
           <div class="menuLabel">{{ label }}</div>
           <q-btn
@@ -194,8 +195,9 @@ export default {
 
 .photoMenu {
   margin-bottom: 20px;
-  height: 60px;
+  height: 128.7px;
   object-fit: contain;
+  border-radius: 10px;
 }
 
 .photoButton {

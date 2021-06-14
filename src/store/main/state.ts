@@ -1,9 +1,9 @@
 export interface MainStateInterface {
   settings: any;
-  user: object | null;
-  dataProfessional: object;
-  dataCompany: object;
-  options: object; // 0: not, 1: professional, 2: recruiter
+  user: any | null;
+  dataProfessional: any;
+  dataCompany: any;
+  options: any; // 0: not, 1: professional, 2: recruiter
 }
 
 function state(): MainStateInterface {
@@ -25,7 +25,8 @@ function state(): MainStateInterface {
       city_id: [],
       religion_id: -1,
       gender_id: -1,
-      userVerified: false,
+      verificationStatus: 0, // 0 belum, 1 pending, 2 sukses, 3 declined
+      verificationDate: null, // 0 belum, 1 pending, 2 sukses, 3 declined
     },
     dataCompany: {
       address: "",

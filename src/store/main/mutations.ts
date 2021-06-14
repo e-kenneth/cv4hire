@@ -22,15 +22,19 @@ const mutation: MutationTree<MainStateInterface> = {
       gender_id: -1,
     };
   },
+  uploadVerification(state: MainStateInterface, payload) {
+    state.dataProfessional!.verificationStatus = 0;
+    state.dataProfessional!.verificationDate = new Date();
+  },
   dataProfessional(state, payload) {
     state.dataProfessional = payload;
   },
   dataCompany(state, payload) {
     state.dataCompany = payload;
   },
-  toggleDarkMode(state){
+  toggleDarkMode(state) {
     state.settings.darkMode = !state.settings.darkMode;
-  }
+  },
 };
 
 export default mutation;

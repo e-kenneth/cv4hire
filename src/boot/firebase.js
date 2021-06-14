@@ -42,6 +42,8 @@ export default async ({ store }) => {
                                     religion_id: doc.get("religion_d"),
                                     gender_id: doc.get("gender_id"),
                                     userVerified: doc.get("userVerified"),
+                                    verificationStatus: doc.get("verificationStatus"),
+                                    verificationDate: doc.get("verificationDate"),
                                 }
                                 store.commit("main/dataProfessional", dataProfessional);
                             }

@@ -106,6 +106,10 @@ export default defineComponent({
           title: "Profile",
           icon: "school",
           link: "/profile/",
+        },{
+          title: "Verification",
+          icon: "school",
+          link: "/verification/",
         });
       } else if (store.state.main.user.type == 1) {
         links.push({
