@@ -1,6 +1,13 @@
 <template>
   <div>
-    {{ jobCategories }}
+    <div class="column">
+      <div class="row col-2">
+        <img class="banner-photo" src="~assets/photos/banner-home.jpg"/>
+      </div>
+      <div class="row col-8">
+        <h1>videos section</h1>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -15,4 +22,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+.banner-photo{
+  
+}
+
 </style>
