@@ -2,6 +2,20 @@
   <div>
     <q-form @submit="onSubmit" class="q-pa-md q-gutter-md columns">
       <h5 class="form-header">Verifikasi akun</h5>
+      <q-card v-if="dataProfessional.verificationStatus == 1" class="my-card processing">
+        <q-card-section>
+          Verifikasi anda sedang dalam proses. Hubungi
+          <a class="cardlink" href="tel:08113348088">08113348088</a>
+          untuk bantuan.
+        </q-card-section>
+      </q-card>
+      <q-card v-if="dataProfessional.verificationStatus == 3" class="my-card rejected">
+        <q-card-section>
+          Verifikasi anda ditolak. Hubungi
+          <a class="cardlink" href="tel:08113348088">08113348088</a>
+          untuk bantuan.
+        </q-card-section>
+      </q-card>
 
       <q-file v-model="temp.video" label="Video CV anda" accept="video/*">
         <template v-slot:prepend>
@@ -71,7 +85,7 @@ export default {
       return this.$store.state.main.user;
     },
     dataProfessional() {
-      return this.$store.state.main.user;
+      return this.$store.state.main.dataProfessional;
     },
   },
   methods: {
@@ -135,4 +149,16 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.processing {
+  background-color: $primary;
+}
+
+.rejected {
+  background-color: #d22;
+}
+
+.cardlink{
+  color: white;
+}
+</style>
