@@ -87,7 +87,7 @@ export default defineComponent({
     const $q = useQuasar();
 
     const store = useStore();
- 
+
     const essentialLinks = computed(() => {
       let links = [
         {
@@ -106,11 +106,14 @@ export default defineComponent({
           title: "Profile",
           icon: "school",
           link: "/profile/",
-        },{
-          title: "Verification",
-          icon: "school",
-          link: "/verification/",
         });
+        if (store.state.main.dataProfessional.verificationStatus == 0) {
+          links.push({
+            title: "Verification",
+            icon: "school",
+            link: "/verification/",
+          });
+        }
       } else if (store.state.main.user.type == 1) {
         links.push({
           title: "Profile",
@@ -132,11 +135,11 @@ export default defineComponent({
     });
 
     const darkMode = computed(() => store.state.main.settings.darkMode);
-    
+
     watch(darkMode, (newValue, oldValue) => {
       console.log(newValue);
       $q.dark.toggle();
-    })
+    });
 
     return {
       essentialLinks,

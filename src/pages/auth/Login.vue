@@ -17,6 +17,18 @@
         required="required"
       />
       <q-btn label="Masuk" type="submit" color="secondary" />
+      <q-btn
+        label="Daftar sebagai professional"
+        type="submit"
+        color="primary"
+        to="/professional/register/"
+      />
+      <q-btn
+        label="Daftar sebagai perusahaan"
+        type="submit"
+        color="primary"
+        to="/recruiter/register/"
+      />
     </q-form>
   </div>
 </template>
@@ -54,5 +66,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

@@ -1,15 +1,20 @@
 <template>
   <div>
     <q-form @submit="onSubmit" class="q-pa-md q-gutter-md columns">
-      <h5 class="form-header">Daftar akun baru</h5>
+      <h5 class="form-header">Daftar sebagai professional baru</h5>
       <q-input
-        required="required"
+        required
         color="secondary"
         v-model="user.name"
         type="text"
         label="Nama lengkap"
       />
-      <q-file required="required" v-model="temp.photo" label="Foto (formal)" accept="image/*">
+      <q-file
+        required
+        v-model="temp.photo"
+        label="Foto (formal)"
+        accept="image/*"
+      >
         <template v-slot:prepend>
           <q-icon name="add_photo_alternate" />
         </template>
@@ -17,7 +22,7 @@
       <div class="row">
         <div class="self-center q-pr-lg">Tanggal lahir:</div>
         <q-input
-          required="required"
+          required
           color="secondary"
           type="date"
           v-model="user.birthdate"
@@ -28,21 +33,21 @@
         v-model="auth.email"
         type="email"
         label="Alamat email"
-        required="required"
+        required
       />
       <q-input
         color="secondary"
         v-model="auth.password"
         type="password"
         label="Kata sandi"
-        required="required"
+        required
       />
       <q-input
         color="secondary"
-        v-model="auth.password"
+        v-model="temp.password_repeat"
         type="password"
         label="Ulang sandi"
-        required="required"
+        required
       />
       <q-select
         color="secondary"
@@ -90,6 +95,7 @@
           label="Saya sudah punya akun"
           color="secondary"
           flat
+          to="/login"
           class="q-ml-sm"
         />
       </div>
@@ -109,11 +115,11 @@ export default {
       temp: {
         optionCity: [],
         photo: null,
+        password_repeat: "",
       },
       auth: {
         email: "",
         password: "",
-        password_repeat: "",
       },
       user: {
         name: "",
@@ -140,14 +146,21 @@ export default {
   },
   methods: {
     onSubmit() {
+      if (this.auth.password != this.temp.password_repeat) {
+        this.$q.notify({
+          message: "Kata sandi dan kata sandi ulang tidak sama",
+          color: "red",
+        });
+        return null;
+      }
       firebase
         .auth()
         .createUserWithEmailAndPassword(this.auth.email, this.auth.password)
         .then((userCredential) => {
-          const operations = [];
-
           let user = userCredential.user;
           this.user.username = user.uid.substring(0, 6).toUpperCase();
+
+          const operations = [];
 
           operations.push(
             firebase
@@ -172,11 +185,13 @@ export default {
                 console.error(error);
               })
           );
-          let storageRef = firebase
-            .storage()
-            .ref()
-            .child(`professionals/${user.uid}/photo`);
-          operations.push(storageRef.put(this.temp.photo));
+          operations.push(
+            firebase
+              .storage()
+              .ref()
+              .child(`professionals/${user.uid}/photo`)
+              .put(this.temp.photo)
+          );
           operations.push(
             firebase
               .auth()

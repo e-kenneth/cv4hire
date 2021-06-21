@@ -1,20 +1,26 @@
 <template>
   <div>
     <q-form @submit="onSubmit" class="q-pa-md q-gutter-md columns">
-      <h5 class="form-header">Daftar akun baru</h5>
+      <h5 class="form-header">Daftar sebagai perusahaan baru</h5>
       <q-input
         color="secondary"
         v-model="user.name"
         type="text"
         label="Nama Perusahaan"
-        required="required"
+        required
       />
-      <q-file v-model="temp.photo" label="Logo perusahaan" accept="image/*">
+      <q-file
+        required
+        v-model="temp.photo"
+        label="Logo perusahaan"
+        accept="image/*"
+      >
         <template v-slot:prepend>
           <q-icon name="add_photo_alternate" />
         </template>
       </q-file>
       <q-select
+        required
         color="secondary"
         v-model="user.business_type_id"
         :options="options.jobSectors"
@@ -27,14 +33,14 @@
         v-model="user.address"
         type="text"
         label="Alamat perusahaan"
-        required="required"
+        required
       />
       <q-input
         color="secondary"
         v-model="user.npwp"
         type="int"
         label="NPWP"
-        required="required"
+        required
       />
 
       <q-input
@@ -42,36 +48,38 @@
         v-model="user.phone_num"
         type="int"
         label="Nomer HP/ WA"
-        required="required"
+        required
       />
       <q-input
         color="secondary"
         v-model="auth.email"
         type="email"
         label="Alamat email perusahaan"
-        required="required"
+        required
       />
       <q-input
         color="secondary"
         v-model="auth.password"
         type="password"
         label="Kata sandi"
-        required="required"
+        required
       />
       <q-input
         color="secondary"
-        v-model="auth.password"
+        v-model="temp.password_repeat"
         type="password"
         label="Ulang sandi"
-        required="required"
+        required
       />
       <q-input
+        required
         color="secondary"
         v-model="user.website"
         type="text"
         label="Website perusahaan"
       />
       <q-input
+        required
         color="secondary"
         v-model="user.about"
         type="text"
@@ -85,6 +93,7 @@
           label="Saya sudah punya akun"
           color="secondary"
           flat
+          to="/login"
           class="q-ml-sm"
         />
       </div>
@@ -111,16 +120,23 @@ export default {
       },
       temp: {
         photo: null,
+        password_repeat: "",
       },
       auth: {
         email: "",
         password: "",
-        password_repeat: "",
       },
     };
   },
   methods: {
     onSubmit() {
+      if (this.auth.password != this.temp.password_repeat) {
+        this.$q.notify({
+          message: "Kata sandi dan kata sandi ulang tidak sama",
+          color: "red",
+        });
+        return null;
+      }
       firebase
         .auth()
         .createUserWithEmailAndPassword(this.auth.email, this.auth.password)
