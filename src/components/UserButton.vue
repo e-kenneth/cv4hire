@@ -1,15 +1,17 @@
 <template>
   <div>
     <div class="row">
-      <q-img
-        :src="photoURL"
-        class="photoButton"
-        spinner-color="primary"
-        spinner-size="82px"
-        @click="opened = true"
-      />
-      <div v-if="isLoggedIn" class="photoLabel" @click="opened = true">
-        {{ label }}
+      <div class="photoContainer">
+        <q-img
+          :src="photoURL"
+          class="photoButton"
+          spinner-color="primary"
+          spinner-size="82px"
+          @click="opened = true"
+        />
+        <div v-if="isLoggedIn" class="photoLabel" @click="opened = true">
+          {{ label }}
+        </div>
       </div>
     </div>
 
@@ -47,12 +49,7 @@
       </q-card>
       <q-card v-else>
         <q-card-section class="column">
-          <q-img
-            contain
-            :src="photoURL"
-            class="photoMenu"
-            :ratio="1"
-          />
+          <q-img contain :src="photoURL" class="photoMenu" :ratio="1" />
           <div class="menuLabel">{{ label }}</div>
           <q-btn
             class="q-mb-md"
@@ -201,6 +198,7 @@ export default {
 }
 
 .photoButton {
+  display: inline-block;
   cursor: pointer;
   width: 40px;
   height: 40px;
@@ -209,6 +207,7 @@ export default {
   border: 2px solid white;
 }
 .photoLabel {
+  display: inline-block;
   cursor: pointer;
   transition: 1s all;
   max-width: 0;
@@ -219,15 +218,21 @@ export default {
   border-radius: 5px;
 }
 
-.photoButton:hover + .photoLabel {
+// .photoButton:hover + .photoLabel {
+//   max-width: 200px;
+//   padding: 7px 10px;
+//   margin-left: 5px;
+// }
+
+.photoContainer:hover > .photoLabel {
   max-width: 200px;
   padding: 7px 10px;
   margin-left: 5px;
 }
 
-.photoLabel:hover {
-  max-width: 200px;
-  padding: 7px 10px;
-  margin-left: 5px;
-}
+// .photoLabel:hover {
+//   max-width: 200px;
+//   padding: 7px 10px;
+//   margin-left: 5px;
+// }
 </style>
