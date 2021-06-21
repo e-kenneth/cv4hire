@@ -3,19 +3,25 @@
     <q-form @submit="onSubmit" class="q-pa-md q-gutter-md columns">
       <h5 class="form-header">Daftar akun baru</h5>
       <q-input
+        required="required"
         color="secondary"
         v-model="user.name"
         type="text"
         label="Nama lengkap"
       />
-      <q-file v-model="temp.photo" label="Foto (formal)" accept="image/*">
+      <q-file required="required" v-model="temp.photo" label="Foto (formal)" accept="image/*">
         <template v-slot:prepend>
           <q-icon name="add_photo_alternate" />
         </template>
       </q-file>
       <div class="row">
         <div class="self-center q-pr-lg">Tanggal lahir:</div>
-        <q-input color="secondary" type="date" v-model="user.birthdate" />
+        <q-input
+          required="required"
+          color="secondary"
+          type="date"
+          v-model="user.birthdate"
+        />
       </div>
       <q-input
         color="secondary"
@@ -117,7 +123,8 @@ export default {
         city_id: [],
         religion_id: "",
         gender_id: "",
-        userVerified: false,
+        verificationStatus: 0,
+        verificationDate: null,
       },
     };
   },
@@ -137,41 +144,50 @@ export default {
         .auth()
         .createUserWithEmailAndPassword(this.auth.email, this.auth.password)
         .then((userCredential) => {
+          const operations = [];
+
           let user = userCredential.user;
           this.user.username = user.uid.substring(0, 6).toUpperCase();
-          firebase
-            .firestore()
-            .collection("professionals")
-            .doc(user.uid)
-            .set(this.user)
-            .then(() => {
-              console.log("Document successfully written!");
-            })
-            .catch((error) => {
-              console.error("Error writing document: ", error);
-            });
-          firebase
-            .auth()
-            .currentUser.updateProfile({
-              displayName: 0,
-            })
-            .catch((error) => {
-              console.error(error);
-            });
+
+          operations.push(
+            firebase
+              .firestore()
+              .collection("professionals")
+              .doc(user.uid)
+              .set(this.user)
+              .then(() => {
+                console.log("Document successfully written!");
+              })
+              .catch((error) => {
+                console.error("Error writing document: ", error);
+              })
+          );
+          operations.push(
+            firebase
+              .auth()
+              .currentUser.updateProfile({
+                displayName: 0,
+              })
+              .catch((error) => {
+                console.error(error);
+              })
+          );
           let storageRef = firebase
             .storage()
             .ref()
             .child(`professionals/${user.uid}/photo`);
-          storageRef.put(this.temp.photo).then(() => {
-            console.log("Upload Success");
+          operations.push(storageRef.put(this.temp.photo));
+          operations.push(
+            firebase
+              .auth()
+              .currentUser.sendEmailVerification()
+              .catch((error) => {
+                console.error(error);
+              })
+          );
+          Promise.all(operations).then(() => {
             window.location.href = "/";
           });
-          firebase
-            .auth()
-            .currentUser.sendEmailVerification()
-            .catch((error) => {
-              console.error(error);
-            });
         })
         .catch((error) => {
           console.log(error.code);

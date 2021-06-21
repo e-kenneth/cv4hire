@@ -20,10 +20,12 @@ const mutation: MutationTree<MainStateInterface> = {
       city_id: [],
       religion_id: -1,
       gender_id: -1,
+      verificationStatus: 0,
+      verificationDate: null,
     };
   },
   uploadVerification(state: MainStateInterface, payload) {
-    state.dataProfessional!.verificationStatus = 0;
+    state.dataProfessional!.verificationStatus = 1;
     state.dataProfessional!.verificationDate = new Date();
   },
   dataProfessional(state, payload) {

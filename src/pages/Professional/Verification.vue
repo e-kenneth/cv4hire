@@ -82,16 +82,16 @@ export default {
       this.opened = true;
       // const payload = { verificationStatus: 1, verificationDate: new Date() };
       const operations = [];
-      // operations.push(
-      //   firebase
-      //     .storage()
-      //     .ref()
-      //     .child(`professionals/${this.user.uid}/video`)
-      //     .put(this.temp.video)
-      //     .then(() => {
-      //       console.log("Upload video success");
-      //     })
-      // );
+      operations.push(
+        firebase
+          .storage()
+          .ref()
+          .child(`professionals/${this.user.uid}/video`)
+          .put(this.temp.video)
+          .then(() => {
+            console.log("Upload video success");
+          })
+      );
       operations.push(
         firebase
           .storage()
