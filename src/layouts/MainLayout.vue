@@ -107,7 +107,7 @@ export default defineComponent({
           icon: "school",
           link: "/profile/",
         });
-        if (store.state.main.dataProfessional.verificationStatus == 0) {
+        if (store.state.main.dataProfessional.verificationStatus != 2) {
           links.push({
             title: "Verification",
             icon: "school",

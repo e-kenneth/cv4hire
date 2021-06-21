@@ -26,7 +26,7 @@ function state(): MainStateInterface {
       religion_id: -1,
       gender_id: -1,
       verificationStatus: 0, // 0 belum, 1 pending, 2 sukses, 3 declined
-      verificationDate: null, // 0 belum, 1 pending, 2 sukses, 3 declined
+      verificationDate: null,
     },
     dataCompany: {
       address: "",
