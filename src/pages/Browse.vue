@@ -67,5 +67,6 @@ export default {
 <style lang="scss" scoped>
 .professionals {
   // align-items: stretch;
+  margin-bottom: 20px;
 }
 </style>
