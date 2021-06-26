@@ -20,10 +20,22 @@ const mutation: MutationTree<MainStateInterface> = {
       city_id: [],
       religion_id: -1,
       gender_id: -1,
+      verificationStatus: 0,
+      verificationDate: null,
     };
+  },
+  uploadVerification(state: MainStateInterface, payload) {
+    state.dataProfessional!.verificationStatus = 1;
+    state.dataProfessional!.verificationDate = new Date();
   },
   dataProfessional(state, payload) {
     state.dataProfessional = payload;
+  },
+  dataCompany(state, payload) {
+    state.dataCompany = payload;
+  },
+  toggleDarkMode(state) {
+    state.settings.darkMode = !state.settings.darkMode;
   },
 };
 

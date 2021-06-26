@@ -1,12 +1,16 @@
 export interface MainStateInterface {
-  user: object | null;
-  dataProfessional: object;
-  dataCompany: object;
-  options: object; // 0: not, 1: professional, 2: recruiter
+  settings: any;
+  user: any | null;
+  dataProfessional: any;
+  dataCompany: any;
+  options: any; // 0: not, 1: professional, 2: recruiter
 }
 
 function state(): MainStateInterface {
   return {
+    settings: {
+      darkMode: true,
+    },
     user: {
       uid: "",
       email: "",
@@ -21,9 +25,18 @@ function state(): MainStateInterface {
       city_id: [],
       religion_id: -1,
       gender_id: -1,
-      userVerified: false,
+      verificationStatus: 0, // 0 belum, 1 pending, 2 sukses, 3 declined
+      verificationDate: null,
     },
-    dataCompany: {},
+    dataCompany: {
+      address: "",
+      business_type_id: "",
+      name: "",
+      npwp: "",
+      phone_num: "",
+      about: "",
+      website: "",
+    },
     options: {
       types: [
         { value: 0, label: "Professional" },
@@ -35,23 +48,23 @@ function state(): MainStateInterface {
       ],
       jobs: [
         { value: 0, label: "Lainnya" },
-        { value: 1, label: "Akuntansi/Keuangan" },
-        { value: 2, label: "Sumber Daya Manusia/Personalia" },
-        { value: 3, label: "Penjualan/Pemasaran" },
-        { value: 4, label: "Seni/Media/Komunikasi" },
+        { value: 1, label: "Akuntansi" },
+        { value: 2, label: "Personalia" },
+        { value: 3, label: "Pemasaran" },
+        { value: 4, label: "Komunikasi" },
         { value: 5, label: "Pelayanan" },
-        { value: 6, label: "Hotel/Restoran" },
-        { value: 7, label: "Pendidikan/Pelatihan" },
-        { value: 8, label: "Komputer/Teknologi Informasi" },
+        { value: 6, label: "Hotel" },
+        { value: 7, label: "Restoran" },
+        { value: 8, label: "Komputer" },
         { value: 9, label: "Teknik" },
         { value: 10, label: "Manufaktur" },
-        { value: 11, label: "Bangunan/Konstruksi" },
+        { value: 11, label: "Konstruksi" },
         { value: 12, label: "Sains" },
-        { value: 13, label: "Layanan Kesehatan" },
+        { value: 13, label: "Pendidikan" },
+        { value: 14, label: "Layanan Kesehatan" },
       ],
-
-      jobsectors:[
-        { value: 14, label: "Lainnya" },
+      jobSectors:[
+        { value: 0, label: "Lainnya" },
       ],
       religions: [
         { value: 1, label: "Kristen" },

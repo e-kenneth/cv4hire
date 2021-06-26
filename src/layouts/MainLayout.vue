@@ -32,14 +32,14 @@
         <q-space />
 
         <!-- <div>Quasar v{{ $q.version }}</div> -->
-        <div>
+        <!-- <div>
           <q-btn
             color="secondary"
             icon="brightness_high"
             class="q-mr-md"
             @click="darkMode.toggle"
           />
-        </div>
+        </div> -->
         <div><UserButton /></div>
       </q-toolbar>
     </q-header>
@@ -70,25 +70,8 @@
 import EssentialLink from "components/EssentialLink.vue";
 import UserButton from "components/UserButton.vue";
 
-const linksList = [
-  {
-    title: "Home",
-    icon: "school",
-    link: "/",
-  },
-  {
-    title: "Browse",
-    icon: "school",
-    link: "/browse/",
-  },
-  {
-    title: "Profile",
-    icon: "school",
-    link: "/profile/",
-  },
-];
-
-import { defineComponent, ref, computed } from "vue";
+import { defineComponent, ref, computed, reactive, watch } from "vue";
+import { useStore } from "vuex";
 import { useQuasar } from "quasar";
 
 export default defineComponent({
@@ -103,6 +86,44 @@ export default defineComponent({
     const leftDrawerOpen = ref(false);
     const $q = useQuasar();
 
+    const store = useStore();
+
+    const essentialLinks = computed(() => {
+      let links = [
+        {
+          title: "Home",
+          icon: "school",
+          link: "/",
+        },
+        {
+          title: "Browse",
+          icon: "school",
+          link: "/browse/",
+        },
+      ];
+      if (store.state.main.user.type == 0) {
+        links.push({
+          title: "Profile",
+          icon: "school",
+          link: "/profile/",
+        });
+        if (store.state.main.dataProfessional.verificationStatus != 2) {
+          links.push({
+            title: "Verification",
+            icon: "school",
+            link: "/verification/",
+          });
+        }
+      } else if (store.state.main.user.type == 1) {
+        links.push({
+          title: "Profile",
+          icon: "school",
+          link: "/company/profile/",
+        });
+      }
+      return links;
+    });
+
     // $q.screen.setSizes({ sm: 0, md: 800, lg: 1000, xl: 1279 });
 
     const orientation = computed(() => {
@@ -113,19 +134,19 @@ export default defineComponent({
       }
     });
 
-    const darkMode = {
-      toggle: () => {
-        $q.dark.toggle();
-      },
-    };
+    const darkMode = computed(() => store.state.main.settings.darkMode);
+
+    watch(darkMode, (newValue, oldValue) => {
+      console.log(newValue);
+      $q.dark.toggle();
+    });
 
     return {
-      essentialLinks: linksList,
+      essentialLinks,
       leftDrawerOpen,
       toggleLeftDrawer() {
         leftDrawerOpen.value = !leftDrawerOpen.value;
       },
-      darkMode,
       orientation,
     };
   },

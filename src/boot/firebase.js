@@ -27,6 +27,7 @@ export default async ({ store }) => {
                 type: user.displayName,
             };
             store.commit("main/login", currentUser);
+            console.log(store.state.main.user);
             if (user.displayName == 0) {
                 firebase
                     .firestore().collection("professionals").get().then((querySnapshot) => {
@@ -40,13 +41,34 @@ export default async ({ store }) => {
                                     city_id: doc.get("city_id"),
                                     religion_id: doc.get("religion_d"),
                                     gender_id: doc.get("gender_id"),
+                                    userVerified: doc.get("userVerified"),
+                                    verificationStatus: doc.get("verificationStatus"),
+                                    verificationDate: doc.get("verificationDate"),
                                 }
                                 store.commit("main/dataProfessional", dataProfessional);
                             }
                         });
                     });
-            } else {
-// perusahaan
+            } else if (user.displayName == 1) {
+                console.log(`printing companies for ${user.uid}`);
+                firebase
+                    .firestore().collection("companies").get().then((querySnapshot) => {
+                        querySnapshot.forEach((doc) => {
+                            if (doc.id == user.uid) {
+                                const dataCompany = {
+                                    address: doc.get("address"),
+                                    business_type_id: doc.get("business_type_id"),
+                                    name: doc.get("name"),
+                                    npwp: doc.get("npwp"),
+                                    phone_num: doc.get("phone_num"),
+                                    about: doc.get("about"),
+                                    website: doc.get("website"),
+                                }
+                                store.commit("main/dataCompany", dataCompany);
+                                console.log(store.state.main.dataCompany);
+                            }
+                        });
+                    });
             }
         }
     });
