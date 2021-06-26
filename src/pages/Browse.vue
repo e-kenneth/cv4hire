@@ -1,15 +1,22 @@
 <template>
   <div class="container">
     <div class="row q-pa-md items-stretch">
-        <div class="professionals col-6 col-lg-2" v-for="professional in professionals" :key="professional.id">
-          <professional-card :professional="professional" /> 
-        </div>
+      <!-- {{professionals}} -->
+      <div
+        class="professionals col-6 col-lg-2"
+        v-for="professional in professionals"
+        :key="professional.id"
+      >
+        <professional-card :professional="professional" />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import { api } from "boot/axios";
+import firebase from "firebase/app";
+import "firebase/firestore";
+import "firebase/storage";
 import global from "src/components/global";
 import ProfessionalCard from "src/components/ProfessionalCard.vue";
 export default {
@@ -22,30 +29,43 @@ export default {
     };
   },
   computed: {
-      user() {
-          return global.state.loggedInUser; 
-      }
+    user() {
+      return global.state.loggedInUser;
+    },
   },
   mounted() {
-    api
-      .get("professional/")
-      .then((response) => {
-        this.professionals = response.data;
-      })
-      .catch(() => {
-        $q.notify({
-          color: "negative",
-          position: "top",
-          message: "Loading failed",
-          icon: "report_problem",
+    this.load();
+  },
+  methods: {
+    load() {
+      firebase
+        .firestore()
+        .collection("professionals")
+        .get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            const dataProfessional = {
+              id: doc.id,
+              username: doc.get("username"),
+              // birthdate: doc.get("birthday"),
+              job_id: doc.get("job_id"),
+              city_id: doc.get("city_id"),
+              // religion_id: doc.get("religion_d"),
+              // gender_id: doc.get("gender_id"),
+              // userVerified: doc.get("userVerified"),
+              // verificationStatus: doc.get("verificationStatus"),
+              // verificationDate: doc.get("verificationDate"),
+            };
+            this.professionals.push(dataProfessional);
+          });
         });
-      });
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.professionals{
+.professionals {
   // align-items: stretch;
 }
 </style>
