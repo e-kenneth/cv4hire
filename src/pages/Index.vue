@@ -2,7 +2,7 @@
   <div>
     <div class="column">
       <div class="row col-2">
-        <img class="banner-photo" src="~assets/photos/banner-home.jpg"/>
+        <img class="banner-photo" src="https://i.imgur.com/95cKuax.jpg"/>
         <!-- <q-img
           src="~assets/photos/banner-home.jpg"
           :ratio="16/9"
