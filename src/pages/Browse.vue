@@ -5,8 +5,16 @@
     </div>
     <div class="row q-pt-md q-pl-md q-pr-md justify-center">
       <div class="row justify-evenly filterContainer q-ml-sm q-mr-sm" :class="{'folded' : folded}" >
-        <div>1</div>
-        <div>2</div>
+        <div>
+          <q-select v-model="model" :options="$store.state.main.options.jobs" label="Standard" filled />
+          <q-select v-model="model" :options="$store.state.main.options.cities" label="Standard" filled />
+          <q-select v-model="model" :options="$store.state.main.options.religions" label="Standard" filled />
+        </div>
+        <div>
+          <q-select v-model="model" :options="$store.state.main.options.genders" label="Standard" filled />
+          <!-- <q-select v-model="model" :options="$store.state.main.options." label="Standard" filled />
+          <q-select v-model="model" :options="$store.state.main.options." label="Standard" filled /> -->
+        </div>
       </div>
     </div>
     <div class="row q-pa-md items-stretch">
@@ -81,7 +89,7 @@ export default {
   overflow:hidden;
   background-color: $primary;
   width: 100%;
-  height: 400px;
+  height: 200px;
   border-radius: 5px;
   padding: 10px;
   transition: height .5s, padding .5s;
