@@ -1,6 +1,10 @@
 <template>
   <div class="container q-ma-sm">
-    <router-link tag="div" class="column" :to="'/profile/' + professional.username">
+    <router-link
+      tag="div"
+      class="column"
+      :to="'/profile/' + professional.username"
+    >
       <div>
         <q-img
           class="photo"
@@ -9,7 +13,22 @@
           spinner-color="white"
         />
       </div>
-      <div class="title">{{ professional.username }}</div>
+      <div class="titleExplanationContainer">
+        <div class="titleExplanation">
+          KODE PENGGUNA
+          <q-tooltip
+            anchor="top middle"
+            self="bottom middle"
+            :offset="[10, 10]"
+            class="bg-white text-secondary"
+          >
+            TBD To be done later 
+          </q-tooltip>
+        </div>
+      </div>
+      <div class="titleContainer">
+        <div class="title">{{ professional.username }}</div>
+      </div>
       <div class="q-px-md q-py-sm">
         <div class="subtitle">{{ jobs }}</div>
       </div>
@@ -95,27 +114,45 @@ export default {
 a {
   text-decoration: none !important;
 }
-@mixin text {
-  // color: white;
+.titleExplanationContainer {
+  text-align: center;
+}
+.titleExplanation {
+  text-align: center;
+  color: $secondary;
+  background-color: white;
+  margin-top: 10px;
+  margin-bottom: -10px;
+  padding: 5px;
+  border-radius: 5px;
+  font-size: 10px;
+  display: inline-block;
+}
+.titleContainer {
   text-align: center;
 }
 .title {
-  @include text;
-  color: $secondary;
-  padding:5px 0 0px 0;
+  text-align: center;
+  color: white;
+  background-color: $secondary;
+  padding: 5px;
   font-size: 30px;
+  display: inline-block;
+  text-align: center;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba($color: #000000, $alpha: 0.5);
 }
 .subtitle {
-  @include text;
-  color: rgb(77, 77, 77);
-  background-color: rgb(211, 211, 211);
+  text-align: center;
+  color: $secondary;
+  background-color: rgb(255, 255, 255);
   padding: 5px;
   font-size: 15px;
   border-radius: 5px;
 }
 .subtitle2 {
-  @include text;
-  color: rgb(206, 206, 206);
+  text-align: center;
+  color: rgb(255, 255, 255);
   padding: 0 15px 5px 15px;
   font-size: 15px;
 }
