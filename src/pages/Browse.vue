@@ -3,8 +3,11 @@
     <div class="row q-pt-md justify-center">
       <q-btn color="secondary" icon="filter_list" label="Filter" @click="folded = !folded" />
     </div>
-    <div class="row q-pt-md q-pa-md justify-center">
-      <div class="filterContainer q-ml-sm q-mr-sm" :class="{'folded' : folded}" >Filter</div>
+    <div class="row q-pt-md q-pl-md q-pr-md justify-center">
+      <div class="row justify-evenly filterContainer q-ml-sm q-mr-sm" :class="{'folded' : folded}" >
+        <div>1</div>
+        <div>2</div>
+      </div>
     </div>
     <div class="row q-pa-md items-stretch">
       <div
@@ -72,17 +75,19 @@ export default {
 
 <style lang="scss" scoped>
 .professionals {
-  // align-items: stretch;
   margin-bottom: 20px;
 }
 .filterContainer{
+  overflow:hidden;
   background-color: $primary;
   width: 100%;
   height: 400px;
   border-radius: 5px;
-  transition: height .5s;
+  padding: 10px;
+  transition: height .5s, padding .5s;
 }
 .filterContainer.folded{
+  padding: 0;
   height: 0px;
 }
 </style>
