@@ -1,18 +1,39 @@
 <template>
-  <div>
-    <div v-if="isSelfProfile">
-      {{ user }}
+  <div class="row">
+    <div class="col-12 col-lg-6">
+      <div class="videoContainer row" v-if="finishedLoadingVideo">
+        <video :height="videoHeight" class="video col" controls>
+          <source :src="videoURL" type="video/mp4" />
+          <source src="movie.ogg" type="video/ogg" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+      <div v-else>Loading video</div>
     </div>
-    <div v-if="currentProfessional != null">{{ currentProfessional }}</div>
-    <div v-else>Professional tidak ditemukan</div>
+    <div class="col-12 col-lg-6">
+      <div v-if="isSelfProfile">
+        {{ user }}
+      </div>
+      <div v-if="currentProfessional != null">{{ currentProfessional }}</div>
+      <div v-else>Professional tidak ditemukan</div>
+    </div>
   </div>
 </template>
 
 <script>
 import firebase from "firebase/app";
 import "firebase/firestore";
+import "firebase/storage";
 
 export default {
+  data() {
+    return {
+      finishedLoadingVideo: false,
+      videoURL: "",
+      videoHeight: 0,
+      currentProfessional: null,
+    };
+  },
   computed: {
     isSelfProfile() {
       if (
@@ -32,12 +53,8 @@ export default {
       return this.$store.state.main.dataProfessional;
     },
   },
-  data() {
-    return {
-      currentProfessional: null,
-    };
-  },
   mounted() {
+    window.addEventListener("resize", this.resizeVideo);
     if (this.$route.params.id != null) {
       firebase
         .firestore()
@@ -58,14 +75,52 @@ export default {
                 gender_id: doc.get("gender_id"),
               };
               this.currentProfessional = dataProfessional;
+              this.getVideoURL(doc.id);
+              this.resizeVideo();
             }
           });
         });
     } else {
       this.currentProfessional = this.dataProfessional;
+      this.getVideoURL(this.user.uid);
     }
+  },
+  methods: {
+    getVideoURL(id) {
+      console.log("Start loading video");
+      firebase
+        .storage()
+        .ref(`professionals/${id}/video`)
+        .getDownloadURL()
+        .then((url) => {
+          this.videoURL = url;
+          this.finishedLoadingVideo = true;
+          console.log(`Finished loading video: ${url}`);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    resizeVideo(){
+      this.videoHeight = window.innerHeight;
+      // console.log(`resize to ${window.innerHeight}`);
+    }
+  },
+  unmounted() {
+    window.removeEventListener("resize", this.resizeVideo);
   },
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.videoContainer {
+  // display: flex;
+  // align-items: stretch;
+  background-color: black;
+  // height: 100%;
+}
+// .video {
+//   height: 800px;
+//   object-fit: contain;
+// }
+</style>

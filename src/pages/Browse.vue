@@ -1,17 +1,49 @@
 <template>
   <div class="container">
     <div class="row q-pt-md justify-center">
-      <q-btn color="secondary" icon="filter_list" label="Filter" @click="folded = !folded" />
+      <q-btn
+        color="secondary"
+        icon="filter_list"
+        label="Filter"
+        @click="folded = !folded"
+      />
     </div>
     <div class="row q-pt-md q-pl-md q-pr-md justify-center">
-      <div class="row justify-evenly filterContainer q-ml-sm q-mr-sm" :class="{'folded' : folded}" >
-        <div>
-          <q-select v-model="model" :options="$store.state.main.options.jobs" label="Standard" filled />
-          <q-select v-model="model" :options="$store.state.main.options.cities" label="Standard" filled />
-          <q-select v-model="model" :options="$store.state.main.options.religions" label="Standard" filled />
+      <div
+        class="row justify-evenly filterContainer q-ml-sm q-mr-sm"
+        :class="{ folded: folded }"
+      >
+        <div class="col-12 col-lg-6">
+          <q-select
+            class="filterSelect"
+            v-model="filter.jobs"
+            :options="$store.state.main.options.jobs"
+            label="Pekerjaan"
+            filled
+          />
+          <q-select
+            class="filterSelect"
+            v-model="filter.cities"
+            :options="$store.state.main.options.cities"
+            label="Kota"
+            filled
+          />
         </div>
-        <div>
-          <q-select v-model="model" :options="$store.state.main.options.genders" label="Standard" filled />
+        <div class="col-12 col-lg-6">
+          <q-select
+            class="filterSelect"
+            v-model="filter.genders"
+            :options="$store.state.main.options.genders"
+            label="Jenis Kelamin"
+            filled
+          />
+          <!-- <q-select
+            class="filterSelect"
+            v-model="filter.religions"
+            :options="$store.state.main.options.religions"
+            label="Agama"
+            filled
+          /> -->
           <!-- <q-select v-model="model" :options="$store.state.main.options." label="Standard" filled />
           <q-select v-model="model" :options="$store.state.main.options." label="Standard" filled /> -->
         </div>
@@ -41,6 +73,12 @@ export default {
   },
   data() {
     return {
+      filter: {
+        jobs: "",
+        cities: "",
+        religions: "",
+        genders: "",
+      },
       professionals: [],
       folded: true,
     };
@@ -85,17 +123,21 @@ export default {
 .professionals {
   margin-bottom: 20px;
 }
-.filterContainer{
-  overflow:hidden;
+.filterContainer {
+  overflow: hidden;
   background-color: $primary;
   width: 100%;
-  height: 200px;
+  // height: 200px;
   border-radius: 5px;
   padding: 10px;
-  transition: height .5s, padding .5s;
+  transition: height 0.5s, padding 0.5s;
 }
-.filterContainer.folded{
+.filterContainer.folded {
   padding: 0;
   height: 0px;
+}
+.filterSelect {
+  // width: 100%;
+  padding: 10px;
 }
 </style>
