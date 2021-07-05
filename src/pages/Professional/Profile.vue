@@ -102,7 +102,7 @@ export default {
         });
     },
     resizeVideo(){
-      this.videoHeight = window.innerHeight;
+      this.videoHeight = window.innerHeight-58;
       // console.log(`resize to ${window.innerHeight}`);
     }
   },

@@ -127,7 +127,7 @@ export default {
   overflow: hidden;
   background-color: $primary;
   width: 100%;
-  // height: 200px;
+  // height: 170px;
   border-radius: 5px;
   padding: 10px;
   transition: height 0.5s, padding 0.5s;
