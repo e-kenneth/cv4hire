@@ -8,13 +8,54 @@
           Your browser does not support the video tag.
         </video>
       </div>
-      <div v-else>Loading video</div>
+      <div v-else>
+        <div class="spinner">
+          <q-spinner-tail color="secondary" size="10em" />
+          <q-tooltip :offset="[0, 8]">QSpinnerTail</q-tooltip>
+        </div>
+      </div>
     </div>
     <div class="col-12 col-lg-6">
-      <div v-if="isSelfProfile">
+      <!-- <div v-if="isSelfProfile">
         {{ user }}
+      </div> -->
+      <div v-if="currentProfessional != null">
+        <!-- {{ currentProfessional }} -->
+        <div class="row section1">
+          <div class="col-6 col-lg-3" style="text-align: right">
+            <q-img
+              class="photo"
+              :src="photoURL"
+              :ratio="1"
+              spinner-color="secondary"
+              spinner-size="82px"
+            />
+          </div>
+          <div class="col-6 col-lg-9">
+            <div class="username">{{ currentProfessional.username }}</div>
+            <div class="profile">{{ jobs }}</div>
+            <div class="profile">{{ cities }}</div>
+          </div>
+        </div>
+        <div class="row section2">
+          <div class="col">
+            <q-btn color="secondary" icon="share" label="Bagikan (10)" />
+          </div>
+          <div class="col">
+            <q-btn color="secondary" icon="bookmark_add" label="Simpan (15)" />
+          </div>
+          <div class="col">
+            <q-btn
+              color="secondary"
+              icon="add_shopping_cart"
+              label="Kontak (5)"
+            />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col"></div>
+        </div>
       </div>
-      <div v-if="currentProfessional != null">{{ currentProfessional }}</div>
       <div v-else>Professional tidak ditemukan</div>
     </div>
   </div>
@@ -29,7 +70,9 @@ export default {
   data() {
     return {
       finishedLoadingVideo: false,
+      finishedLoadingPhoto: false,
       videoURL: "",
+      photoURL: "",
       videoHeight: 0,
       currentProfessional: null,
     };
@@ -51,6 +94,32 @@ export default {
     },
     dataProfessional() {
       return this.$store.state.main.dataProfessional;
+    },
+    cities() {
+      let stringCities = "";
+      const cities = this.dataProfessional.city_id;
+      cities.forEach((city) => {
+        this.$store.state.main.options.cities.forEach((cityState) => {
+          if (city == cityState.value) {
+            stringCities += cityState.label + " | ";
+          }
+        });
+      });
+      stringCities = stringCities.slice(0, -3);
+      return stringCities;
+    },
+    jobs() {
+      let stringJobs = "";
+      const jobs = this.dataProfessional.job_id;
+      jobs.forEach((job) => {
+        this.$store.state.main.options.jobs.forEach((jobState) => {
+          if (job == jobState.value) {
+            stringJobs += jobState.label + " | ";
+          }
+        });
+      });
+      stringJobs = stringJobs.slice(0, -3);
+      return stringJobs;
     },
   },
   mounted() {
@@ -76,6 +145,7 @@ export default {
               };
               this.currentProfessional = dataProfessional;
               this.getVideoURL(doc.id);
+              this.getPhotoURL(doc.id);
               this.resizeVideo();
             }
           });
@@ -83,6 +153,7 @@ export default {
     } else {
       this.currentProfessional = this.dataProfessional;
       this.getVideoURL(this.user.uid);
+      this.getPhotoURL(this.user.uid);
     }
   },
   methods: {
@@ -101,10 +172,24 @@ export default {
           console.log(error);
         });
     },
-    resizeVideo(){
-      this.videoHeight = window.innerHeight-58;
-      // console.log(`resize to ${window.innerHeight}`);
-    }
+    getPhotoURL(id) {
+      console.log("Start loading photo");
+      firebase
+        .storage()
+        .ref(`professionals/${id}/photo`)
+        .getDownloadURL()
+        .then((url) => {
+          this.photoURL = url;
+          // this.finishedLoadingPhoto = true;
+          console.log(`Finished loading photo: ${url}`);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    resizeVideo() {
+      this.videoHeight = window.innerHeight - 58;
+    },
   },
   unmounted() {
     window.removeEventListener("resize", this.resizeVideo);
@@ -114,13 +199,35 @@ export default {
 
 <style lang="scss" scoped>
 .videoContainer {
-  // display: flex;
-  // align-items: stretch;
   background-color: black;
-  // height: 100%;
 }
-// .video {
-//   height: 800px;
-//   object-fit: contain;
-// }
+
+.spinner{
+  text-align: center;
+  margin: 30%;
+}
+
+.section1 {
+  background-color: $secondary;
+  // text-align: center;
+}
+.photo {
+  width: 150px;
+  border-radius: 50%;
+  margin: 20px 0;
+}
+.username {
+  font-size: 30px;
+  padding: 40px 0 0 20px;
+}
+.profile {
+  font-size: 15px;
+  padding: 0px 0 0 22px;
+}
+
+.section2 {
+  background-color: $primary;
+  text-align: center;
+  padding: 20px 0;
+}
 </style>

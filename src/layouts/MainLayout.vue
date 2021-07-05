@@ -1,7 +1,7 @@
 <template>
   <q-layout view="lHh Lpr lFf">
     <q-header elevated>
-      <q-toolbar>
+      <q-toolbar ref="toolbar">
         <q-btn
           v-if="orientation == 'portrait'"
           flat
