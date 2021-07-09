@@ -94,33 +94,33 @@ export default defineComponent({
     const essentialLinks = computed(() => {
       let links = [
         {
-          title: "Home",
-          icon: "school",
+          title: "Beranda",
+          icon: "home",
           link: "/",
         },
         {
-          title: "Browse",
-          icon: "school",
+          title: "Cari",
+          icon: "search",
           link: "/browse/",
         },
       ];
       if (store.state.main.user.type == 0) {
         links.push({
-          title: "Profile",
-          icon: "school",
+          title: "Profil",
+          icon: "person",
           link: `/profile/${store.state.main.user.uid.substring(0,6).toUpperCase()}`,
         });
         if (store.state.main.dataProfessional.verificationStatus != 2) {
           links.push({
-            title: "Verification",
-            icon: "school",
+            title: "Verifikasi",
+            icon: "verified_user",
             link: "/verification/",
           });
         }
       } else if (store.state.main.user.type == 1) {
         links.push({
-          title: "Profile",
-          icon: "school",
+          title: "Profil",
+          icon: "person",
           link: `/company/profile/`,
         });
       }
