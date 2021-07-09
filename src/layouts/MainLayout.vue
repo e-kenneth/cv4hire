@@ -40,6 +40,7 @@
             @click="darkMode.toggle"
           />
         </div> -->
+        <div v-if="$store.state.main.user.type == 1"><Coin /></div>
         <div><UserButton /></div>
       </q-toolbar>
     </q-header>
@@ -69,6 +70,7 @@
 <script lang="ts">
 import EssentialLink from "components/EssentialLink.vue";
 import UserButton from "components/UserButton.vue";
+import Coin from "components/Coin.vue";
 
 import { defineComponent, ref, computed, reactive, watch } from "vue";
 import { useStore } from "vuex";
@@ -80,6 +82,7 @@ export default defineComponent({
   components: {
     EssentialLink,
     UserButton,
+    Coin,
   },
 
   setup() {
@@ -105,7 +108,7 @@ export default defineComponent({
         links.push({
           title: "Profile",
           icon: "school",
-          link: "/profile/",
+          link: `/profile/${store.state.main.user.uid.substring(0,6).toUpperCase()}`,
         });
         if (store.state.main.dataProfessional.verificationStatus != 2) {
           links.push({
@@ -118,7 +121,7 @@ export default defineComponent({
         links.push({
           title: "Profile",
           icon: "school",
-          link: "/company/profile/",
+          link: `/company/profile/`,
         });
       }
       return links;

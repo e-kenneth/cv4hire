@@ -11,14 +11,11 @@
       <div v-else>
         <div class="spinner">
           <q-spinner-tail color="secondary" size="10em" />
-          <q-tooltip :offset="[0, 8]">QSpinnerTail</q-tooltip>
+          <!-- <q-tooltip :offset="[0, 8]">Loading video</q-tooltip> -->
         </div>
       </div>
     </div>
     <div class="col-12 col-lg-6">
-      <!-- <div v-if="isSelfProfile">
-        {{ user }}
-      </div> -->
       <div v-if="currentProfessional != null">
         <!-- {{ currentProfessional }} -->
         <div class="row section1">
@@ -47,7 +44,7 @@
           <div class="col">
             <q-btn
               color="secondary"
-              icon="add_shopping_cart"
+              icon="monetization_on"
               label="Kontak (5)"
             />
           </div>
@@ -78,26 +75,13 @@ export default {
     };
   },
   computed: {
-    isSelfProfile() {
-      if (
-        this.$route.params.id == null ||
-        this.$route.params.id.toString().toLowerCase() ==
-          this.dataProfessional.username.toLowerCase()
-      ) {
-        return true;
-      } else {
-        return false;
-      }
-    },
     user() {
       return this.$store.state.main.user;
     },
-    dataProfessional() {
-      return this.$store.state.main.dataProfessional;
-    },
     cities() {
+      if (this.currentProfessional == null) return "Loading...";
       let stringCities = "";
-      const cities = this.dataProfessional.city_id;
+      const cities = this.currentProfessional.city_id;
       cities.forEach((city) => {
         this.$store.state.main.options.cities.forEach((cityState) => {
           if (city == cityState.value) {
@@ -109,8 +93,9 @@ export default {
       return stringCities;
     },
     jobs() {
+      if (this.currentProfessional == null) return "Loading...";
       let stringJobs = "";
-      const jobs = this.dataProfessional.job_id;
+      const jobs = this.currentProfessional.job_id;
       jobs.forEach((job) => {
         this.$store.state.main.options.jobs.forEach((jobState) => {
           if (job == jobState.value) {
@@ -124,7 +109,16 @@ export default {
   },
   mounted() {
     window.addEventListener("resize", this.resizeVideo);
-    if (this.$route.params.id != null) {
+    this.initialLoad();
+  },
+  watch: {
+    "$route.params.id"(newValue, oldValue) {
+      console.log(newValue, oldValue);
+      this.initialLoad();
+    }
+  },
+  methods: {
+    initialLoad() {
       firebase
         .firestore()
         .collection("professionals")
@@ -150,13 +144,7 @@ export default {
             }
           });
         });
-    } else {
-      this.currentProfessional = this.dataProfessional;
-      this.getVideoURL(this.user.uid);
-      this.getPhotoURL(this.user.uid);
-    }
-  },
-  methods: {
+    },
     getVideoURL(id) {
       console.log("Start loading video");
       firebase
@@ -202,7 +190,7 @@ export default {
   background-color: black;
 }
 
-.spinner{
+.spinner {
   text-align: center;
   margin: 30%;
 }
