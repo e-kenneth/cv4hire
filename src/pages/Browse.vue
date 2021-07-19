@@ -96,19 +96,23 @@ export default {
       firebase
         .firestore()
         .collection("professionals")
+        // .where("verificationStatus", "==", 1)
+        .orderBy("verificationDate", "desc")
+        .limit(18)
         .get()
         .then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
             const dataProfessional = {
               id: doc.id,
               username: doc.get("username"),
+              // username: doc.get("verificationDate"),
               // birthdate: doc.get("birthday"),
               job_id: doc.get("job_id"),
               city_id: doc.get("city_id"),
               // religion_id: doc.get("religion_d"),
               // gender_id: doc.get("gender_id"),
               // userVerified: doc.get("userVerified"),
-              // verificationStatus: doc.get("verificationStatus"),
+              verificationStatus: doc.get("verificationStatus"),
               // verificationDate: doc.get("verificationDate"),
             };
             this.professionals.push(dataProfessional);
