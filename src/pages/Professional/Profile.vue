@@ -36,17 +36,20 @@
         </div>
         <div class="row section2">
           <div class="col">
-            <q-btn color="secondary" icon="share" label="Bagikan (10)" />
+            <custom-profile-button icon="share" label="Bagikan" number="27"></custom-profile-button>
+            <!-- <q-btn color="secondary" icon="share" label="Bagikan (10)" /> -->
           </div>
           <div class="col">
-            <q-btn color="secondary" icon="bookmark_add" label="Simpan (15)" />
+            <custom-profile-button icon="bookmark_add" label="Simpan" number="57"></custom-profile-button>
+            <!-- <q-btn color="secondary" icon="bookmark_add" label="Simpan (15)" /> -->
           </div>
           <div class="col">
-            <q-btn
+            <custom-profile-button icon="monetization_on" label="Kontak" number="3"></custom-profile-button>
+            <!-- <q-btn
               color="secondary"
               icon="monetization_on"
               label="Kontak (5)"
-            />
+            /> -->
           </div>
         </div>
         <div class="row">
@@ -63,7 +66,12 @@ import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/storage";
 
+import CustomProfileButton from "components/CustomProfileButton.vue";
+
 export default {
+  components: {
+    CustomProfileButton,
+  },
   data() {
     return {
       finishedLoadingVideo: false,
