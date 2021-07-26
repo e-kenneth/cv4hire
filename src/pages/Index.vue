@@ -1,19 +1,39 @@
 <template>
   <div>
-    <div class="column">
-      <div class="row col-2">
-        <img class="banner-photo" src="https://i.imgur.com/95cKuax.jpg"/>
-        <!-- <q-img
-          src="~assets/photos/banner-home.jpg"
-          :ratio="16/9"
+    <div class="row">
+      <div class="col-lg-7">
+        <q-img
+          src="https://i.imgur.com/N0j9GHV.png"
           spinner-color="primary"
           spinner-size="82px"
-        /> -->
+          height="800px"
+        />
       </div>
-      <div class="row col-8">
-        <h1>videos section</h1>
+      <div class="col-lg-5">
+        <div class="row logo">
+          <q-img
+            src="https://i.imgur.com/totU5EU.png"
+            spinner-color="primary"
+            spinner-size="82px"
+            width="300px"
+          />
+        </div>
+        <div class="row heading q-mt-lg q-mb-lg">
+          Display your personality,
+          <br />
+          Demonstrate your prowess.
+        </div>
+        <div class="row q-gutter-lg q-py-lg">
+          <q-btn color="secondary" label="Saya sedang mencari pekerjaan" />
+          <q-btn color="primary" label="Kami sedang mencari professional" />
+        </div>
       </div>
     </div>
+    <!-- <div class="row">
+      <q-parallax src="https://cdn.quasar.dev/img/parallax2.jpg">
+        <h1 class="text-white">F.A.Q</h1>
+      </q-parallax>
+    </div> -->
   </div>
 </template>
 
@@ -28,12 +48,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-.banner-photo{
-  height: 600px;
-  width: 100%;
-  object-fit: cover;
-  object-position: center;
+.heading {
+  font-size: 40px;
 }
 
+.logo {
+  margin: 60px 0 60px 0;
+}
 </style>
