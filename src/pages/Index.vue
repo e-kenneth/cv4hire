@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="row">
-      <div class="col-lg-7">
+      <div class="col-12 col-lg-7">
         <q-img
           src="https://i.imgur.com/N0j9GHV.png"
           spinner-color="primary"
@@ -9,10 +9,10 @@
           height="800px"
         />
       </div>
-      <div class="col-lg-5">
+      <div class="col-12 col-lg-5 text">
         <div class="row logo">
           <q-img
-            src="https://i.imgur.com/totU5EU.png"
+            src="https://i.imgur.com/Tk0Thv2.png"
             spinner-color="primary"
             spinner-size="82px"
             width="300px"
@@ -52,7 +52,12 @@ export default {
   font-size: 40px;
 }
 
+.text{
+  padding-left: 100px;
+}
+
 .logo {
   margin: 60px 0 60px 0;
+  
 }
 </style>
