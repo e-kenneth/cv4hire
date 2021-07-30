@@ -13,6 +13,8 @@ const routes: RouteRecordRaw[] = [
       { path: 'login', component: () => import('pages/auth/Login.vue') },
       { path: 'professional/register', component: () => import('pages/Professional/Register.vue') },
       { path: 'recruiter/register', component: () => import('pages/Recruiter/Register.vue') },
+      { path: 'professional/faq', component: () => import('pages/Professional/Faq.vue') },
+      { path: 'recruiter/faq', component: () => import('pages/Recruiter/Faq.vue') },
       { path: 'verification', component: () => import('pages/Professional/Verification.vue') },
       { path: 'payment', component: () => import('pages/Recruiter/Payment.vue') },
     ],
