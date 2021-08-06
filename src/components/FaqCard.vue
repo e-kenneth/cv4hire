@@ -3,9 +3,9 @@
     <q-img :src="card.img" height="400px"/>
 
     <q-card-section>
-      <div class="text-h5 q-mt-sm q-mb-xs">{{ card.title }}</div>
-      <div class="text-caption text-grey">
-        {{ card.text1 }}
+      <div class="text-caption text-secondary q-mt-sm q-mb-xs">{{ card.text1 }}</div>
+      <div class="text-h5">
+        {{ card.title }}
       </div>
     </q-card-section>
     <q-card-actions>
