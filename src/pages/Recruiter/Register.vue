@@ -166,7 +166,8 @@ export default {
           );
           operations.push(firebase.auth().currentUser.sendEmailVerification());
           Promise.all(operations).then(() => {
-            window.location.href = "/";
+            window.location.href = "/browse";
+              // this.$router.push("/browse");
           });
         })
         .catch((error) => {

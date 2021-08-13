@@ -53,6 +53,7 @@ export default {
         .signInWithEmailAndPassword(this.user.email, this.user.password)
         .then((userCredential) => {
           // redirect
+          this.$router.push("/browse");
         })
         .catch((error) => {
           console.log(error.code);

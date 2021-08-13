@@ -201,7 +201,8 @@ export default {
               })
           );
           Promise.all(operations).then(() => {
-            window.location.href = "/";
+            window.location.href = "/browse";
+            // this.$router.push("/browse");
           });
         })
         .catch((error) => {

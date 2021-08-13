@@ -36,15 +36,28 @@
         </div>
         <div class="row section2">
           <div class="col">
-            <custom-profile-button icon="share" label="Bagikan" number="27"></custom-profile-button>
+            <custom-profile-button
+              icon="share"
+              label="Bagikan"
+              number="27"
+            ></custom-profile-button>
             <!-- <q-btn color="secondary" icon="share" label="Bagikan (10)" /> -->
           </div>
           <div class="col">
-            <custom-profile-button icon="bookmark_add" label="Simpan" number="57"></custom-profile-button>
+            <custom-profile-button
+              icon="bookmark_add"
+              label="Simpan"
+              number="57"
+            ></custom-profile-button>
             <!-- <q-btn color="secondary" icon="bookmark_add" label="Simpan (15)" /> -->
           </div>
           <div class="col">
-            <custom-profile-button icon="monetization_on" label="Kontak" number="3"></custom-profile-button>
+            <custom-profile-button
+              icon="monetization_on"
+              label="Kontak"
+              number="3"
+              @click="showPaymentPopup"
+            ></custom-profile-button>
             <!-- <q-btn
               color="secondary"
               icon="monetization_on"
@@ -58,6 +71,21 @@
       </div>
       <div v-else>Professional tidak ditemukan</div>
     </div>
+    <q-dialog v-model="paymentPopup">
+      <q-card>
+        <q-card-section class="row items-center">
+          <!-- <q-avatar icon="signal_wifi_off" color="primary" text-color="white" /> -->
+          <span class="q-ml-sm"
+            >Melakukan kontak dengan {{ currentProfessional.username }} akan mengurangi koin anda sejumlah 10. Lanjutkan proses?</span
+          >
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="Batalkan" color="text-secondary" v-close-popup />
+          <q-btn :label="`Kontak ${currentProfessional.username}`" color="secondary" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 
@@ -80,6 +108,7 @@ export default {
       photoURL: "",
       videoHeight: 0,
       currentProfessional: null,
+      paymentPopup: false,
     };
   },
   computed: {
@@ -123,7 +152,7 @@ export default {
     "$route.params.id"(newValue, oldValue) {
       console.log(newValue, oldValue);
       this.initialLoad();
-    }
+    },
   },
   methods: {
     initialLoad() {
@@ -185,6 +214,9 @@ export default {
     },
     resizeVideo() {
       this.videoHeight = window.innerHeight - 58;
+    },
+    showPaymentPopup() {
+      this.paymentPopup = true;
     },
   },
   unmounted() {
