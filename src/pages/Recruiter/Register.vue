@@ -117,6 +117,7 @@ export default {
         phone_num: "",
         website: "",
         about: "",
+        coins: 0,
       },
       temp: {
         photo: null,

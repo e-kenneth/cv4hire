@@ -36,6 +36,7 @@ function state(): MainStateInterface {
       phone_num: "",
       about: "",
       website: "",
+      coins: 0,
     },
     options: {
       types: [

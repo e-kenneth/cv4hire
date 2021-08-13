@@ -39,7 +39,7 @@
             <custom-profile-button
               icon="share"
               label="Bagikan"
-              number="27"
+              :number="27"
             ></custom-profile-button>
             <!-- <q-btn color="secondary" icon="share" label="Bagikan (10)" /> -->
           </div>
@@ -47,7 +47,7 @@
             <custom-profile-button
               icon="bookmark_add"
               label="Simpan"
-              number="57"
+              :number="57"
             ></custom-profile-button>
             <!-- <q-btn color="secondary" icon="bookmark_add" label="Simpan (15)" /> -->
           </div>
@@ -55,7 +55,7 @@
             <custom-profile-button
               icon="monetization_on"
               label="Kontak"
-              number="3"
+              :number="3"
               @click="showPaymentPopup"
             ></custom-profile-button>
             <!-- <q-btn
@@ -76,13 +76,18 @@
         <q-card-section class="row items-center">
           <!-- <q-avatar icon="signal_wifi_off" color="primary" text-color="white" /> -->
           <span class="q-ml-sm"
-            >Melakukan kontak dengan {{ currentProfessional.username }} akan mengurangi koin anda sejumlah 10. Lanjutkan proses?</span
+            >Melakukan kontak dengan {{ currentProfessional.username }} akan
+            mengurangi koin anda sejumlah 10. Lanjutkan proses?</span
           >
         </q-card-section>
 
         <q-card-actions align="right">
           <q-btn flat label="Batalkan" color="text-secondary" v-close-popup />
-          <q-btn :label="`Kontak ${currentProfessional.username}`" color="secondary" v-close-popup />
+          <q-btn
+            :label="`Kontak ${currentProfessional.username}`"
+            color="secondary"
+            @click="purchaseUser"
+          />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -217,6 +222,31 @@ export default {
     },
     showPaymentPopup() {
       this.paymentPopup = true;
+    },
+    purchaseUser() {
+      const user = firebase.auth().currentUser;
+      firebase
+        .firestore()
+        .collection("companies")
+        .get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            if (doc.id == user.uid) {
+              const coins = doc.get("coins");
+              this.$store.commit("main/updateCoins", coins);
+              if (coins >= 10) {
+                this.$q.notify({
+                  message: "Proses transaksi",
+                });
+              } else {
+                this.$q.notify({
+                  message: "Koin anda tidak cukup",
+                  color: "red",
+                });
+              }
+            }
+          });
+        });
     },
   },
   unmounted() {

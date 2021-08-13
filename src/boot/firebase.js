@@ -63,6 +63,7 @@ export default async ({ store }) => {
                                     phone_num: doc.get("phone_num"),
                                     about: doc.get("about"),
                                     website: doc.get("website"),
+                                    coins: doc.get("coins"),
                                 }
                                 store.commit("main/dataCompany", dataCompany);
                                 console.log(store.state.main.dataCompany);

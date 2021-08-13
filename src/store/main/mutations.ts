@@ -37,6 +37,9 @@ const mutation: MutationTree<MainStateInterface> = {
   toggleDarkMode(state) {
     state.settings.darkMode = !state.settings.darkMode;
   },
+  updateCoins(state, payload){
+    state.dataCompany.coins = payload;
+  },
 };
 
 export default mutation;
