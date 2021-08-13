@@ -2,7 +2,7 @@
   <div>
     <div class="header text-center">Cara mencari kerja di CVForHire</div>
 
-    <div class="row q-pa-md q-gutter-md">
+    <div class="row q-pa-md q-gutter-md text-center cards">
       <div
         class="col-12 col-lg q-pa-md"
         v-for="card in faqCards"
@@ -68,7 +68,11 @@
       </div>
     </div>
 
-    <div class="header text-center">FAQ</div>
+    <div class="text-center">
+      <q-btn color="primary" class="q-ma-xl" size="xl" label="Daftar akun sekarang" to="register" />
+    </div>
+
+    <div class="header-faq text-center">FAQ</div>
     <div class="row q-px-lg q-pb-md justify-center faq">
       <div class="q-pa-md q-gutter-sm">
         <q-tree :nodes="simple" node-key="label" class="text-white" />
@@ -112,7 +116,7 @@ export default {
 
       simple: [
         {
-          label: "Satisfied customers (with avatar)",
+          label: "Sx",
           avatar: "https://cdn.quasar.dev/img/boy-avatar.png",
           children: [
             {
@@ -149,7 +153,19 @@ export default {
 
 <style lang="scss" scoped>
 .header {
-  font-size: 50px;
+  font-size: 30px;
+  color: white;
+  background-color: $secondary;
+  width: 75%;
+  padding: 15px;
+  margin: auto;
+  margin-top: 50px;
+  border-radius: 5px;
+  // text-transform: uppercase;
+}
+
+.header-faq {
+  font-size: 30px;
 }
 
 .timeline {
@@ -158,8 +174,12 @@ export default {
   font-size: 20px;
 }
 
-.faq{
-  background-color:$secondary;
+.faq {
+  background-color: $secondary;
 }
 
+.cards {
+  margin: auto;
+  width: 80%;
+}
 </style>
