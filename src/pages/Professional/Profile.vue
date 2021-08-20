@@ -242,6 +242,8 @@ export default {
                   .then((doc) => {
                     if (doc.exists) {
                       console.log("exist");
+                      // check sudah pernah beli user ini
+                      // min 10 coin kalau nggak pernah beli user ini
                       fs.collection("connections")
                         .doc(user.uid)
                         .update({
@@ -252,6 +254,7 @@ export default {
                         });
                     } else {
                       console.log("not exist");
+                      // min 10 coin
                       fs.collection("connections")
                         .doc(user.uid)
                         .set({
