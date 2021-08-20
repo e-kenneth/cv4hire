@@ -172,6 +172,7 @@ export default {
               this.$route.params.id.toString().toUpperCase()
             ) {
               const dataProfessional = {
+                uid: doc.id,
                 username: doc.get("username"),
                 birthdate: doc.get("birthday"),
                 job_id: doc.get("job_id"),
@@ -224,10 +225,9 @@ export default {
       this.paymentPopup = true;
     },
     purchaseUser() {
+      const fs = firebase.firestore();
       const user = firebase.auth().currentUser;
-      firebase
-        .firestore()
-        .collection("companies")
+      fs.collection("companies")
         .get()
         .then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
@@ -235,6 +235,34 @@ export default {
               const coins = doc.get("coins");
               this.$store.commit("main/updateCoins", coins);
               if (coins >= 10) {
+                const docRef = fs.collection("connections").doc(user.uid);
+
+                docRef
+                  .get()
+                  .then((doc) => {
+                    if (doc.exists) {
+                      console.log("exist");
+                      fs.collection("connections")
+                        .doc(user.uid)
+                        .update({
+                          professionals:
+                            firebase.firestore.FieldValue.arrayUnion(
+                              this.currentProfessional.uid
+                            ),
+                        });
+                    } else {
+                      console.log("not exist");
+                      fs.collection("connections")
+                        .doc(user.uid)
+                        .set({
+                          professionals: [this.currentProfessional.uid],
+                        });
+                    }
+                  })
+                  .catch((error) => {
+                    console.log("Error getting document:", error);
+                  });
+
                 this.$q.notify({
                   message: "Proses transaksi",
                 });
@@ -243,6 +271,7 @@ export default {
                   message: "Koin anda tidak cukup",
                   color: "red",
                 });
+                this.$router.push("/payment");
               }
             }
           });
