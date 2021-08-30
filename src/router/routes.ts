@@ -17,6 +17,7 @@ const routes: RouteRecordRaw[] = [
       { path: 'recruiter/faq', component: () => import('pages/Recruiter/Faq.vue') },
       { path: 'verification', component: () => import('pages/Professional/Verification.vue') },
       { path: 'payment', component: () => import('pages/Recruiter/Payment.vue') },
+      { path: 'connections', component: () => import('pages/Recruiter/Connections.vue') },
     ],
   },
 

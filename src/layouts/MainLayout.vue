@@ -108,7 +108,9 @@ export default defineComponent({
         links.push({
           title: "Profil",
           icon: "person",
-          link: `/profile/${store.state.main.user.uid.substring(0,6).toUpperCase()}`,
+          link: `/profile/${store.state.main.user.uid
+            .substring(0, 6)
+            .toUpperCase()}`,
         });
         if (store.state.main.dataProfessional.verificationStatus != 2) {
           links.push({
@@ -118,11 +120,18 @@ export default defineComponent({
           });
         }
       } else if (store.state.main.user.type == 1) {
-        links.push({
-          title: "Profil",
-          icon: "person",
-          link: `/company/profile/`,
-        });
+        links.push(
+          {
+            title: "Profil",
+            icon: "person",
+            link: `/company/profile/`,
+          },
+          {
+            title: "Koneksi",
+            icon: "person",
+            link: `/connections/`,
+          }
+        );
       }
       return links;
     });
