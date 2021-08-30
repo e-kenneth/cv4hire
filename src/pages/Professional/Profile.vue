@@ -53,10 +53,17 @@
           </div>
           <div class="col">
             <custom-profile-button
+              v-if="purchasedConnection == false"
               icon="monetization_on"
               label="Kontak"
               :number="3"
               @click="showPaymentPopup"
+            ></custom-profile-button>
+            <custom-profile-button
+              v-else
+              icon="monetization_on"
+              label="Kontak"
+              :number="3"
             ></custom-profile-button>
             <!-- <q-btn
               color="secondary"
@@ -114,6 +121,7 @@ export default {
       videoHeight: 0,
       currentProfessional: null,
       paymentPopup: false,
+      purchasedConnection: false,
     };
   },
   computed: {
@@ -167,23 +175,52 @@ export default {
         .get()
         .then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
-            if (
-              doc.get("username") ==
-              this.$route.params.id.toString().toUpperCase()
-            ) {
-              const dataProfessional = {
-                uid: doc.id,
-                username: doc.get("username"),
-                birthdate: doc.get("birthday"),
-                job_id: doc.get("job_id"),
-                city_id: doc.get("city_id"),
-                religion_id: doc.get("religion_d"),
-                gender_id: doc.get("gender_id"),
-              };
-              this.currentProfessional = dataProfessional;
-              this.getVideoURL(doc.id);
-              this.getPhotoURL(doc.id);
-              this.resizeVideo();
+            if (this.$route.params.id != undefined) {
+              if (
+                doc.get("username") ==
+                this.$route.params.id.toString().toUpperCase()
+              ) {
+                const dataProfessional = {
+                  uid: doc.id,
+                  username: doc.get("username"),
+                  birthdate: doc.get("birthday"),
+                  job_id: doc.get("job_id"),
+                  city_id: doc.get("city_id"),
+                  religion_id: doc.get("religion_d"),
+                  gender_id: doc.get("gender_id"),
+                };
+                this.currentProfessional = dataProfessional;
+                this.getVideoURL(doc.id);
+                this.getPhotoURL(doc.id);
+                this.resizeVideo();
+                console.log(this.user.uid);
+
+                // cek pernah beli user ini atau tidak
+                var docRef = firebase
+                  .firestore()
+                  .collection("connections")
+                  .doc(this.user.uid);
+
+                docRef
+                  .get()
+                  .then((doc) => {
+                    if (doc.exists) {
+                      // console.log("Document data:", doc.data().professionals);
+                      console.log(
+                        doc
+                          .data()
+                          .professionals.includes(this.currentProfessional.uid)
+                      );
+                      this.purchasedConnection = doc
+                        .data()
+                        .professionals.includes(this.currentProfessional.uid);
+                      console.log("No such document!");
+                    }
+                  })
+                  .catch((error) => {
+                    console.log("Error getting document:", error);
+                  });
+              }
             }
           });
         });
@@ -235,11 +272,19 @@ export default {
               const coins = doc.get("coins");
               this.$store.commit("main/updateCoins", coins);
               if (coins >= 10) {
+                this.$store.commit("main/updateCoins", coins - 10);
+                fs.collection("companies")
+                  .doc(user.uid)
+                  .update({
+                    coins: coins - 10,
+                  });
+
                 const docRef = fs.collection("connections").doc(user.uid);
 
                 docRef
                   .get()
                   .then((doc) => {
+                    // check pernah beli user atau nggak
                     if (doc.exists) {
                       console.log("exist");
                       // check sudah pernah beli user ini
