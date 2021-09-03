@@ -51,7 +51,7 @@
             ></custom-profile-button>
             <!-- <q-btn color="secondary" icon="bookmark_add" label="Simpan (15)" /> -->
           </div>
-          <div class="col">
+          <div class="col" v-if="user.type == 1">
             <custom-profile-button
               v-if="purchasedConnection == false"
               icon="monetization_on"
@@ -65,11 +65,6 @@
               label="Kontak"
               :number="3"
             ></custom-profile-button>
-            <!-- <q-btn
-              color="secondary"
-              icon="monetization_on"
-              label="Kontak (5)"
-            /> -->
           </div>
         </div>
         <div class="row">
