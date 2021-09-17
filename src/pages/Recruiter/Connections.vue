@@ -1,9 +1,11 @@
 <template>
   <div class="q-pa-md text-center">
-    <div class="col">
-      {{ user }}
-      {{ connections }}
+    <div class="columns" v-if="connections.length > 0">
+      <div v-for="connection in connections" :key="connection.uid">
+        <ConnectionCard :connection="connection" />
+      </div>
     </div>
+    <div v-else>Silahkan beli kontak terlebih dahulu</div>
   </div>
 </template>
 
@@ -12,7 +14,12 @@ import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/storage";
 
+import ConnectionCard from "src/components/ConnectionCard.vue";
+
 export default {
+  components: {
+    ConnectionCard,
+  },
   data() {
     return {
       connections: [],
@@ -25,7 +32,7 @@ export default {
   },
   methods: {
     getConnections() {
-      if (this.user != null) {
+      if (this.user.uid != "") {
         var docRef = firebase
           .firestore()
           .collection("connections")
@@ -35,7 +42,20 @@ export default {
           .get()
           .then((doc) => {
             if (doc.exists) {
-              this.connections = doc.data().professionals;
+              const connectionIDs = doc.data().professionals;
+
+              connectionIDs.forEach((id) => {
+                firebase
+                  .firestore()
+                  .collection("professionals")
+                  .doc(id)
+                  .get()
+                  .then((doc) => {
+                    let tempData = doc.data();
+                    tempData.uid = doc.id;
+                    this.connections.push(tempData);
+                  });
+              });
             }
           })
           .catch((error) => {
@@ -45,6 +65,7 @@ export default {
     },
   },
   mounted() {
+    this.getConnections();
     // if (this.user != null) {
     //   this.getConnections();
     // }
