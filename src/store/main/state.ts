@@ -44,7 +44,7 @@ function state(): MainStateInterface {
         { value: 1, label: "Perusahaan" },
       ],
       genders: [
-        { value: 0, label: "Pria" },
+        { value: 2, label: "Pria" },
         { value: 1, label: "Wanita" },
       ],
       jobs: [

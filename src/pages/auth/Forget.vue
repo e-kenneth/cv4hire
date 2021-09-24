@@ -1,7 +1,7 @@
 <template>
   <div>
     <q-form @submit="onSubmit" class="q-pa-md q-gutter-md columns">
-      <h5 class="form-header">Login</h5>
+      <h5 class="form-header">Reset kata sandi anda</h5>
       <q-input
         color="secondary"
         v-model="user.email"

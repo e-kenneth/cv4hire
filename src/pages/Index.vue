@@ -20,9 +20,7 @@
           />
         </div>
         <div class="row heading q-mt-lg q-mb-lg">
-          Display your personality,
-          <br />
-          Demonstrate your prowess.
+          Website video CV pertama Indonesia (TBD)
         </div>
         <div class="row q-gutter-lg q-py-lg">
           <q-btn color="secondary" label="Saya sedang mencari pekerjaan" to="/professional/faq" />

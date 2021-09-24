@@ -16,26 +16,32 @@
         <div class="col-12 col-lg-6">
           <q-select
             class="filterSelect"
-            v-model="filter.jobs"
+            v-model="filter.job_id"
             :options="$store.state.main.options.jobs"
             label="Pekerjaan"
             filled
+            emit-value
+            map-options
           />
           <q-select
             class="filterSelect"
-            v-model="filter.cities"
+            v-model="filter.city_id"
             :options="$store.state.main.options.cities"
             label="Kota"
             filled
+            emit-value
+            map-options
           />
         </div>
         <div class="col-12 col-lg-6">
           <q-select
             class="filterSelect"
-            v-model="filter.genders"
+            v-model="filter.gender_id"
             :options="$store.state.main.options.genders"
             label="Jenis Kelamin"
             filled
+            emit-value
+            map-options
           />
           <!-- <q-select
             class="filterSelect"
@@ -74,10 +80,9 @@ export default {
   data() {
     return {
       filter: {
-        jobs: "",
-        cities: "",
-        religions: "",
-        genders: "",
+        job_id: "",
+        city_id: "",
+        gender_id: "",
       },
       professionals: [],
       folded: true,
@@ -91,33 +96,54 @@ export default {
   mounted() {
     this.load();
   },
+  watch: {
+    filter: {
+      handler(val, oldVal) {
+        this.load();
+      },
+      deep: true,
+    },
+  },
   methods: {
     load() {
-      firebase
+      this.professionals = [];
+      let users = firebase
         .firestore()
         .collection("professionals")
         // .where("verificationStatus", "==", 1)
-        .orderBy("verificationDate", "desc")
-        .limit(18)
-        .get()
-        .then((querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-            const dataProfessional = {
-              id: doc.id,
-              username: doc.get("username"),
-              // username: doc.get("verificationDate"),
-              // birthdate: doc.get("birthday"),
-              job_id: doc.get("job_id"),
-              city_id: doc.get("city_id"),
-              // religion_id: doc.get("religion_d"),
-              // gender_id: doc.get("gender_id"),
-              // userVerified: doc.get("userVerified"),
-              verificationStatus: doc.get("verificationStatus"),
-              // verificationDate: doc.get("verificationDate"),
-            };
-            this.professionals.push(dataProfessional);
-          });
+        .orderBy("verificationDate", "desc");
+
+      if (this.filter.gender_id != "") {
+        users = users.where("gender_id", "==", this.filter.gender_id);
+        console.log("filtered gender");
+      }      
+      if (this.filter.city_id != "") {
+        users = users.where("city_id", "array-contains",this.filter.city_id);
+      }      
+      if (this.filter.job_id != "") {
+        users = users.where("job_id", "array-contains", this.filter.job_id);
+      }
+
+      users = users.get();
+
+      users.then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          const dataProfessional = {
+            id: doc.id,
+            username: doc.get("username"),
+            // username: doc.get("verificationDate"),
+            // birthdate: doc.get("birthday"),
+            job_id: doc.get("job_id"),
+            city_id: doc.get("city_id"),
+            // religion_id: doc.get("religion_d"),
+            // gender_id: doc.get("gender_id"),
+            // userVerified: doc.get("userVerified"),
+            verificationStatus: doc.get("verificationStatus"),
+            // verificationDate: doc.get("verificationDate"),
+          };
+          this.professionals.push(dataProfessional);
         });
+      });
     },
   },
 };

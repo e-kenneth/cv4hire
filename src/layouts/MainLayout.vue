@@ -114,7 +114,7 @@ export default defineComponent({
         });
         if (store.state.main.dataProfessional.verificationStatus != 2) {
           links.push({
-            title: "Verifikasi",
+            title: "Verifikasi (Harus dilakukan sebelum akun anda muncul di pencarian)",
             icon: "verified_user",
             link: "/verification/",
           });
