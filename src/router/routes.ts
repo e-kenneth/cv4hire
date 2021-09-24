@@ -11,6 +11,7 @@ const routes: RouteRecordRaw[] = [
       { path: 'profile', component: () => import('pages/Professional/Profile.vue') },
       { path: 'profile/:id', component: () => import('pages/Professional/Profile.vue') },
       { path: 'login', component: () => import('pages/auth/Login.vue') },
+      { path: 'forget', component: () => import('pages/auth/Forget.vue') },
       { path: 'professional/register', component: () => import('pages/Professional/Register.vue') },
       { path: 'recruiter/register', component: () => import('pages/Recruiter/Register.vue') },
       { path: 'professional/faq', component: () => import('pages/Professional/Faq.vue') },

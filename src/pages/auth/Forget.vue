@@ -9,26 +9,7 @@
         label="Alamat email"
         required="required"
       />
-      <q-input
-        color="secondary"
-        v-model="user.password"
-        type="password"
-        label="Kata sandi"
-        required="required"
-      />
-      <q-btn label="Masuk" type="submit" color="secondary" />
-      <q-btn label="Lupa password"
-        to="/forget/" color="secondary" />
-      <q-btn
-        label="Daftar sebagai professional"
-        color="primary"
-        to="/professional/register/"
-      />
-      <q-btn
-        label="Daftar sebagai perusahaan"
-        color="primary"
-        to="/recruiter/register/"
-      />
+      <q-btn label="Reset kata sandi" type="submit" color="secondary" />
     </q-form>
   </div>
 </template>
@@ -42,7 +23,6 @@ export default {
     return {
       user: {
         email: "",
-        password: "",
       },
     };
   },
@@ -50,10 +30,12 @@ export default {
     onSubmit() {
       firebase
         .auth()
-        .signInWithEmailAndPassword(this.user.email, this.user.password)
+        .sendPasswordResetEmail(this.user.email)
         .then((userCredential) => {
-          // redirect
-          this.$router.push("/browse");
+          this.$q.notify({
+            message: "Link reset password sudah dikirim",
+            color: "secondary",
+          });
         })
         .catch((error) => {
           console.log(error.code);

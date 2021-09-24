@@ -37,7 +37,7 @@
       />
       <q-input
         color="secondary"
-        v-model="user.phonenumber"
+        v-model="user.phone_number"
         type="Nomor telepon/Whatsapp"
         label="Nomor telepon/Whatsapp"
         required
@@ -138,7 +138,7 @@ export default {
         gender_id: "",
         verificationStatus: 0,
         verificationDate: null,
-        phonenumber: "",
+        phone_number: "",
       },
     };
   },
