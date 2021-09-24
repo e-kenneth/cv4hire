@@ -37,6 +37,13 @@
       />
       <q-input
         color="secondary"
+        v-model="user.phonenumber"
+        type="Nomor telepon/Whatsapp"
+        label="Nomor telepon/Whatsapp"
+        required
+      />
+      <q-input
+        color="secondary"
         v-model="auth.password"
         type="password"
         label="Kata sandi"
@@ -131,6 +138,7 @@ export default {
         gender_id: "",
         verificationStatus: 0,
         verificationDate: null,
+        phonenumber: "",
       },
     };
   },
