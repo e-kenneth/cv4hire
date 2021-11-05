@@ -1,64 +1,91 @@
 <template>
   <div>
-    <div class="row">
-      <div class="col-0 col-lg-7">
+    <div class="row top">
+      <div class="col">
         <q-img
-          src="https://i.imgur.com/N0j9GHV.png"
+          src="ui_elements/home_1.svg"
           spinner-color="primary"
           spinner-size="82px"
-          height="800px"
         />
       </div>
-      <div class="col-1 col-lg-1"></div>
-      <div class="col-10 col-lg-4 text">
-        <div class="row logo">
-          <q-img
-            src="https://i.imgur.com/Tk0Thv2.png"
-            spinner-color="primary"
-            spinner-size="82px"
-            width="300px"
-          />
-        </div>
-        <div class="row heading q-mt-lg q-mb-lg">
-          Website video CV pertama Indonesia (TBD)
-        </div>
-        <div class="row q-gutter-lg q-py-lg">
-          <q-btn color="secondary" label="Saya sedang mencari pekerjaan" to="/professional/faq" />
-          <q-btn color="primary" label="Kami sedang mencari professional"  to="/recruiter/faq"/>
+      <div class="col">
+        <div class="content">
+          <div class="row">
+            <div class="col heading">
+              SELAMAT DATANG
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <q-input  type="email" label="Email" />
+              <q-input  type="password" label="Password" />
+              <br>
+              <q-btn color="secondary" label="Masuk" />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col"></div>
+          </div>
         </div>
       </div>
     </div>
-    <!-- <div class="row">
-      <q-parallax src="https://cdn.quasar.dev/img/parallax2.jpg">
-        <h1 class="text-white">F.A.Q</h1>
-      </q-parallax>
-    </div> -->
   </div>
 </template>
 
 <script>
 export default {
-  computed: {
-    jobCategories() {
-      return this.$store.state.main.options.jobs;
-    },
-  },
+  mounted() {},
 };
 </script>
 
 <style lang="scss" scoped>
+@import url("https://fonts.googleapis.com/css2?family=Zen+Kurenaido&display=swap");
+
+.top {
+  background: rgb(255, 255, 255);
+  // background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(199,245,255,1) 100%);
+  height: 800px;
+  overflow: hidden;
+}
+.content {
+  background-color: $primary;
+  padding: 50px;
+  width: 500px;
+  border-radius: 20px;
+  margin-top: 200px;
+  margin-left: 200px;
+}
 .heading {
-  font-size: 40px;
+  color: white;
+  font-family: "Zen Kurenaido", sans-serif;
+  font-size: 30px;
 }
 
-.text{
-  // padding-left: 100px;
-  
+.text-glow-0 {
+  text-shadow: red 0 0 5px;
 }
 
-.logo {
-  margin: 60px 0 0 0;
-  text-align: center;
-  
+.text-glow-animated-1 {
+  animation: textglow1 1.5s infinite alternate;
+}
+@keyframes textglow1 {
+  from {
+    text-shadow: rgb(83, 118, 186) 0 0 -5px;
+  }
+  to {
+    text-shadow: rgb(83, 118, 186) 0 0 10px;
+  }
+}
+
+.text-glow-animated-2 {
+  animation: textglow1 1.5s infinite alternate;
+}
+@keyframes textglow1 {
+  from {
+    text-shadow:rgb(238, 57, 104) 0 0 -5px;
+  }
+  to {
+    text-shadow: rgb(238, 57, 104) 0 0 10px;
+  }
 }
 </style>
